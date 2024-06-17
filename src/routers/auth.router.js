@@ -7,6 +7,7 @@ import { PointsRepository } from '../repositories/points.repository.js';
 import { RefreshTokenRepository } from '../repositories/refresh-token.repository.js';
 import { validateRefreshToken } from '../middlewares/require-refresh-token.middleware.js';
 import { requireRoles } from '../middlewares/require-roles.middleware.js';
+import { validateAccessToken } from '../middlewares/require-access-token.middleware.js';
 
 const router = express.Router();
 
@@ -21,10 +22,10 @@ router.post('/sign-up', authController.signUpUser);
 // 로그인 API
 router.post('/sign-in', authController.signInUser);
 // 로그 아웃 API
-router.post('/sign-out', validateRefreshToken, authController.signOutUser);
+router.post('/sign-out', validateRefreshToken(usersRepository, refreshTokenRepository), authController.signOutUser);
 // 토큰 재발급 API
-router.post('/refresh', validateRefreshToken, authController.reNewToken);
+router.post('/refresh', validateRefreshToken(usersRepository, refreshTokenRepository), authController.reNewToken);
 // 인증 미들웨어 테스트 API
-router.get('/test', validateRefreshToken, requireRoles(['CUSTOMER']), authController.test);
+router.get('/test', validateAccessToken(usersRepository), requireRoles(['CUSTOMER']), authController.test);
 
 export default router;
