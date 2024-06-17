@@ -11,9 +11,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/api', router);
 
 app.get('/', (req, res) => {
-  res.send('Hello world!!');
+    res.send('Hello world!!');
 });
 
 app.listen(PORT, () => {
-  console.log(`App is running at http://localhost:${PORT}`);
+    console.log(`App is running at http://localhost:${PORT}`);
 });
