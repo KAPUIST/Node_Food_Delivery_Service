@@ -27,4 +27,11 @@ export class UsersRepository {
             data: changeData
         })
     };
+
+    //유저 삭제
+    deleteUser=async(condition)=> {
+        const user=await this.prisma.delete({
+            where:condition
+        })
+    }
 }

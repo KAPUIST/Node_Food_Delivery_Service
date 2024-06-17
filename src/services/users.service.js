@@ -44,5 +44,21 @@ export class UsersService {
 
         return changedUser;
     }
+    deleteUser=async (condition,password) => {
+        //사용자 입력 확인
+        if (!password) {
+            const error={status:403,errorMessage:"비밀번호를 입력해주세요!"};
+            return error;
+        }
+        if (!(await this.findUser(condition))) {
+            const error={status:404,errorMessage:"존재하지 않는 계정입니다!"};
+            return error;
+        }
+        if (!(await this.verifyPassword(password,user.password))) {
+            const error={status:403,errorMessage:"비밀번호가 일치하지 않습니다."};
+            return error;
+        }
+
+    }
 
 }

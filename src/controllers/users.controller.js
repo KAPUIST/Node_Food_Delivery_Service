@@ -23,7 +23,7 @@ export class UsersController {
             next(err);
         }
     }
-    
+
     //내 계정 정보 수정
     myInfoEdit=async (req,res,next)=> {
         try {
@@ -40,6 +40,23 @@ export class UsersController {
             next(err);
         }
     }
+    deleteAccount=async(req,res,next)=>{
+        try {
+            const user=req.user;
+            const result=await this.UsersService.deleteUser(condition,password);
+
+            //사용자 입력에 문제 발생시
+            if (result.errorMessage) {
+                return res.status(result.status).json({errorMessage:result.errorMessage});
+            }
+
+            return res.status(200).json({Message:"성공적으로 삭제되었습니다!"});
+        }
+        catch (err) {
+            next(err);
+        }
+    }
+    
 
 
 }
