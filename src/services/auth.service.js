@@ -11,7 +11,7 @@ export class AuthService {
         this.pointsRepository = pointsRepository;
         this.refreshTokenRepository = refreshTokenRepository;
     }
-    // 회원가입 - service
+    // 회원가입
     signUpUser = async ({ email, password, role, city, address, name, phoneNumber }) => {
         const existUser = await this.usersRepository.findUser({ email });
 
@@ -32,7 +32,7 @@ export class AuthService {
         delete createdUser.password;
         return createdUser;
     };
-    // 로그인 - service
+    // 로그인
     signInUser = async (email, password) => {
         const condition = { email };
         const user = await this.usersRepository.findUser(condition);
@@ -53,7 +53,27 @@ export class AuthService {
         // 리프레쉬 토큰 해쉬한번 더하기
         const hashedRefreshToken = bcrypt.hashSync(refreshToken, ENV_CONS.BCRYPT_ROUND);
         await this.refreshTokenRepository.upsertRefreshToken(user.id, hashedRefreshToken);
-        console.log(accessToken, refreshToken);
+        return { accessToken, refreshToken };
+    };
+    // 로그 아웃
+    signOut = async (userId) => {
+        const deletedUser = await this.refreshTokenRepository.deleteRefreshToken(userId);
+        return deletedUser;
+    };
+    // 토큰 재발급
+    reNewToken = async (user) => {
+        // accessToken 생성
+        const accessToken = jwt.sign({ id: user.id }, ENV_CONS.ACCESS_TOKEN_KEY, {
+            expiresIn: AUTH_CONS.ACCESS_EXPIRE_TIME,
+        });
+
+        // refreshToken 생성
+        const refreshToken = jwt.sign({ id: user.id }, ENV_CONS.REFRESH_TOKEN_KEY, {
+            expiresIn: AUTH_CONS.REFRESH_EXPIRE_TIME,
+        });
+        // 리프레쉬 토큰 해쉬한번 더하기
+        const hashedRefreshToken = bcrypt.hashSync(refreshToken, ENV_CONS.BCRYPT_ROUND);
+        await this.refreshTokenRepository.upsertRefreshToken(user.id, hashedRefreshToken);
         return { accessToken, refreshToken };
     };
 }
