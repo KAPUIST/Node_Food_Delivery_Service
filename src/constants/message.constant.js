@@ -38,4 +38,15 @@ export const MESSAGES = {
             KEYWORD: '검색 내용을 입력해 주세요.',
         },
     },
+    MENU: {
+        COMMON: {
+            NOT_FOUND: '메뉴가 존재하지 않습니다.',
+            MENU_NOT_FOUND_IN_RESTAURANT: '레스토랑 에서 메뉴를 가지고있지 않습니다.',
+        },
+    },
+    POINTS: {
+        COMMON: {
+            NOT_ENOUGH_POINT: '포인트가 부족합니다.',
+        },
+    },
 };
