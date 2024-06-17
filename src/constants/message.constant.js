@@ -33,4 +33,9 @@ export const MESSAGES = {
             SUCCEED: '로그인에 성공했습니다.',
         },
     },
+    SEARCH: {
+        COMMON: {
+            KEYWORD: '검색 내용을 입력해 주세요.',
+        },
+    },
 };
