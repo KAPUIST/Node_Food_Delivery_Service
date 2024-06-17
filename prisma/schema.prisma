@@ -154,10 +154,10 @@ model Reviews {
 }
 model Images { 
   id Int @id @default(autoincrement()) 
-  menuId Int @map("menu_id")
-  reviewId Int @map("review_id")
+  menuId Int? @map("menu_id")
+  reviewId Int? @map("review_id")
+  url String
   createdAt DateTime @map("created_at") @default(now())
-  
   
   menu Menus? @relation(fields: [menuId],references: [id])
   review Reviews? @relation(fields: [reviewId],references: [id])
