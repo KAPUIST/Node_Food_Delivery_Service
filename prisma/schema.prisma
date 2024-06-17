@@ -1,14 +1,178 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mysql"
   url      = env("DATABASE_URL")
+}
+
+enum Role {
+  OWNER
+  CUSTOMER
+}
+enum CuisinType {
+  KOREAN
+  WESTERN
+  CHINESE
+  JAPANESE
+}
+
+enum OrderStatus {
+  PREPARING
+  DELIVERY
+  DELIVERED
+  CANCELED
+}
+
+
+model Users {
+  id Int @id @default(autoincrement()) 
+  email String  @unique
+  password String 
+  role Role @default(CUSTOMER) 
+  city String 
+  address String 
+  name String 
+  phoneNumber String @map("phone_number")
+  createdAt DateTime @map("created_at") @default(now())
+  updatedAt DateTime @map("updated_at") @updatedAt
+
+  point Points?
+  token Tokens?
+  reviews Reviews[]
+  notification Notifications[]
+  orders Orders[] 
+  restaurant Restaurants[]
+
+  @@index([email], name: "idx_user_email")
+}
+
+model Points {
+
+  id Int @default(autoincrement()) @id 
+  userId Int @map("user_id") @unique
+  point Int  @default(1000000) //사장님일경우 0
+  updatedAt DateTime @map("updated_at") @updatedAt
+
+  user Users @relation(fields: [userId],references: [id],onDelete: Cascade)
+}
+
+model Tokens {
+  id Int @default(autoincrement()) @id 
+  userId Int @map("user_id") @unique
+  token String? 
+  createdAt DateTime @map("created_at") @default(now())
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  user Users @relation(fields: [userId],references: [id],onDelete: Cascade)
+}
+
+model Restaurants {
+  id Int @default(autoincrement()) @id 
+  ownerId Int @map("owner_id")
+  totalRevenue Int @map("total_revenue") @default(0)
+  name String 
+  city String 
+  address String 
+  cuisineType CuisinType @map("cuisine_type")
+  createdAt DateTime @map("created_at") @default(now())
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  owner Users @relation(fields: [ownerId],references: [id],onDelete: Cascade)
+  menus Menus[]
+  orders Orders[]
+  reviews Reviews[]
+
+  @@index([ownerId], name: "idx_restaurants_owner_id")
+  @@index([city], name: "idx_restaurants_city")
+}
+
+model Menus {
+  id Int @id @default(autoincrement()) 
+  restaurantId Int @map("restaurant_id")
+  name String 
+  price Int 
+  createdAt DateTime @map("created_at") @default(now())
+  updatedAt DateTime @updatedAt @map("updated_at")
+  
+  restaurant Restaurants @relation(fields: [restaurantId],references: [id],onDelete: Cascade)
+  orderItems OrderItems[]
+  images Images[]
+
+  @@unique([restaurantId, name], name: "unique_restaurant_menu_name")
+  @@index([restaurantId], name: "idx_menus_restaurant_id")
+}
+
+model Orders {
+  id Int @id @default(autoincrement()) 
+  customerId Int @map("customer_id")
+  restaurantId Int @map("restaurant_id")
+  status OrderStatus @default(PREPARING) 
+  createdAt DateTime @map("created_at") @default(now())
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  customer Users @relation(fields: [customerId],references: [id])
+  restaurant Restaurants @relation(fields: [restaurantId],references: [id])
+  orderItems OrderItems[]
+
+  @@index([customerId], name: "idx_orders_customer_id")
+  @@index([restaurantId], name: "idx_orders_restaurant_id")
+}
+
+model OrderItems {
+  id Int @id @default(autoincrement()) 
+  orderId Int @map("order_id")
+  menuId Int @map("menu_id")
+  quantity Int 
+  price Int 
+  
+  order Orders @relation(fields: [orderId],references: [id])
+  menu Menus @relation(fields: [menuId],references: [id])
+  
+
+  @@index([orderId], name: "idx_order_items_order_id")
+  @@index([menuId], name: "idx_order_items_menu_id")
+}
+
+model Reviews { 
+  id Int @id @default(autoincrement()) 
+  customerId Int @map("customer_id")
+  restaurantId Int @map("restaurant_id")
+  rating Int @default(5) 
+  comment String @db.Text
+  createdAt DateTime @map("created_at") @default(now())
+  updatedAt DateTime @updatedAt @map("updated_at")
+  
+  customer Users @relation(fields: [customerId],references: [id],onDelete: Cascade)
+  restaurant Restaurants @relation(fields: [restaurantId],references: [id],onDelete: Cascade)
+  images Images[]
+
+  @@index([customerId], name: "idx_reviews_customer_id")
+  @@index([restaurantId], name: "idx_reviews_restaurant_id")
+}
+model Images { 
+  id Int @id @default(autoincrement()) 
+  menuId Int @map("menu_id")
+  reviewId Int @map("review_id")
+  createdAt DateTime @map("created_at") @default(now())
+  
+  
+  menu Menus? @relation(fields: [menuId],references: [id])
+  review Reviews? @relation(fields: [reviewId],references: [id])
+  @@index([menuId], name: "idx_images_menu_id")
+  @@index([reviewId], name: "idx_images_review_id")
+}
+
+model Notifications {
+  id Int @id @default(autoincrement()) 
+  userId Int @map("user_id")
+  read Boolean @default(false)
+  reatedAt DateTime @map("created_at") @default(now())
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  user Users @relation(fields: [userId], references: [id],onDelete: Cascade)
+
+  @@index([userId], name: "idx_notifications_user_id")
 }
