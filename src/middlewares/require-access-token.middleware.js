@@ -1,8 +1,6 @@
 import jwt from 'jsonwebtoken';
-import { prisma } from '../utils/prisma/prisma.util.js';
 import { ENV_CONS } from '../constants/env.constant.js';
 import { MESSAGES } from '../constants/message.constant.js';
-import { UsersRepository } from '../repositories/users.repository.js';
 import { HttpError } from '../errors/http.error.js';
 
 export const validateAccessToken = (usersRepository) => {
