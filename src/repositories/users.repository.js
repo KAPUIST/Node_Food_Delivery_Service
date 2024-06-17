@@ -18,4 +18,13 @@ export class UsersRepository {
         });
         return createdUser;
     };
+
+
+    //유저 테이블 정보 변경
+    modifyUser=async(condition,changeData) => {
+        const user= await this.prisma.users.update({
+            where: condition,
+            data: changeData
+        })
+    };
 }
