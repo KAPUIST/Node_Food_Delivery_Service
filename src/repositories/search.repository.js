@@ -1,4 +1,4 @@
-export default class searchRepository {
+export default class SearchRepository {
     constructor(prisma) {
         this.prisma = prisma;
     }
