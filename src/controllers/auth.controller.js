@@ -12,6 +12,8 @@ export class AuthController {
             return res
                 .status(HTTP_STATUS.CREATED)
                 .json({ status: HTTP_STATUS.CREATED, message: MESSAGES.AUTH.SIGN_UP.SUCCEED, data: createdUser });
-        } catch (err) {}
+        } catch (err) {
+            next(err);
+        }
     };
 }

@@ -1,5 +1,5 @@
 export class UsersRepository {
-    construcor(prisma) {
+    constructor(prisma) {
         this.prisma = prisma;
     }
 
@@ -8,6 +8,7 @@ export class UsersRepository {
         const user = await this.prisma.users.findUnique({
             where: condition,
         });
+
         return user;
     };
     // 유저 생성
