@@ -1,6 +1,6 @@
 import Joi from 'joi';
-import { MESSAGES } from '../../constants/message.constant.js';
-import { AUTH_CONS } from '../../constants/auth.constant.js';
+import { MESSAGES } from '../../../constants/message.constant.js';
+import { AUTH_CONS } from '../../../constants/auth.constant.js';
 
 export const signUpValidator = async (req, res, next) => {
     try {
@@ -35,8 +35,8 @@ export const signUpValidator = async (req, res, next) => {
                     'any.only': MESSAGES.AUTH.COMMON.PASSWORD_CONFIRM.NOT_MATCHED_WITH_PASSWORD,
                 }),
             role: Joi.string()
-                .required()
                 .valid(...Object.values(AUTH_CONS.ROLE))
+                .required()
                 .messages({
                     'string.base': MESSAGES.AUTH.COMMON.PASSWORD.BASE,
                     'string.empty': MESSAGES.AUTH.COMMON.ROLE.REQUIRED,
@@ -63,8 +63,9 @@ export const signUpValidator = async (req, res, next) => {
                 'string.empty': MESSAGES.AUTH.COMMON.PHONE_NUMBER.BASE,
                 'any.required': MESSAGES.AUTH.COMMON.PHONE_NUMBER.BASE,
             }),
-            point: Joi.number().required().messages({
+            point: Joi.number().integer().required().messages({
                 'number.base': MESSAGES.AUTH.COMMON.POINT.BASE,
+                'number.integer': MESSAGES.AUTH.COMMON.POINT.BASE,
                 'number.empty': MESSAGES.AUTH.COMMON.POINT.BASE,
                 'any.required': MESSAGES.AUTH.COMMON.POINT.BASE,
             }),
