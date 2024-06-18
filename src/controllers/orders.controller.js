@@ -68,6 +68,7 @@ export default class OrderController {
             const { orderId } = req.params;
             const { status } = req.body; // 새로운 상태 값
             const userId = req.user.id;
+
             if (!Object.values(CommonOrderStatus).includes(status.toUpperCase())) {
                 throw new HttpError.BadRequest(MESSAGES.ORDER.COMMON.UNKNOWN_STATUS);
             }

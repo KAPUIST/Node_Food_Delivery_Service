@@ -2,6 +2,14 @@ export default class OrdersRepository {
     constructor(prisma) {
         this.prisma = prisma;
     }
+    findOwnerByRestaurantId = async (restaurantId) => {
+        const restaurant = await this.prisma.restaurants.findUnique({
+            where: { id: restaurantId },
+            select: { ownerId: true },
+        });
+
+        return restaurant ? restaurant.ownerId : null;
+    };
     findOrderById = async (orderId) => {
         return await this.prisma.orders.findUnique({
             where: { id: orderId },

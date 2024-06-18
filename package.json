@@ -8,7 +8,8 @@
     "type": "module",
     "scripts": {
         "dev": "nodemon ./src/app.js",
-        "seed": "node ./src/utils/prisma/prisma.seed.js"
+        "seed": "node ./src/utils/prisma/prisma.seed.js",
+        "socket": "node ./src/utils/websocket/ws-client.js"
     },
     "dependencies": {
         "@prisma/client": "^5.15.0",
@@ -19,7 +20,8 @@
         "jsonwebtoken": "^9.0.2",
         "nodemailer": "^6.9.13",
         "prisma": "^5.15.0",
-        "redis": "^4.6.14"
+        "redis": "^4.6.14",
+        "ws": "^8.17.1"
     },
     "devDependencies": {
         "eslint": "^9.5.0",
