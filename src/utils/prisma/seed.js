@@ -27,6 +27,7 @@ async function main() {
         중식: 'CHINESE',
         일식: 'JAPANESE',
     };
+    const ORDER_STATUS_MAPPING = ['ORDER_PLACED', 'PREPARING', 'OUT_FOR_DELIVERY', 'DELIVERED', 'CANCELED'];
 
     // Faker로 20명의 사용자 생성 (10명은 사장님, 10명은 고객님)
     const users = [];
@@ -111,13 +112,10 @@ async function main() {
         const orders = [];
         for (let i = 0; i < 20; i++) {
             const customer = users[faker.number.int({ min: 10, max: 19 })]; // 고객들 중 한 명이 주문 (index 10 ~ 19)
-            const status = faker.helpers.arrayElement([
-                'ORDER_PLACED',
-                'PREPARING',
-                'OUT_FOR_DELIVERY',
-                'DELIVERED',
-                'CANCELED',
-            ]);
+            const status = faker.helpers.arrayElement(ORDER_STATUS_MAPPING);
+            if (!status || !ORDER_STATUS_MAPPING.includes(status)) {
+                status = 'ORDER_PLACED'; // 기본 값 설정
+            }
             const order = prisma.orders.create({
                 data: {
                     customerId: customer.id,
