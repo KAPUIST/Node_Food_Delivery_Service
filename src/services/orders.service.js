@@ -19,8 +19,24 @@ export default class OrdersService {
             return await this.orderRepository.findRecentOrders(restaurantId);
         }
     };
+    // 주문 상태 업데이트 기능 추가
+    updateOrderStatus = async (orderId, status) => {
+        return await this.orderRepository.updateOrderStatus(orderId, status);
+    };
+    //본인 레스토랑인지 확인하는 함수
     verifyRestaurantOwner = async (userId, restaurantId) => {
         return await this.orderRepository.isUserOwnerOfRestaurant(userId, restaurantId);
+    };
+    // 배달 완료 기능
+    completeOrder = async (userId, orderId, order) => {
+        // 주문 항목의 총 가격 계산
+        const totalAmount = order.orderItems.reduce((total, item) => {
+            return total + item.price * item.quantity;
+        }, 0);
+        return await this.orderRepository.completeOrderTx(orderId, order.restaurantId, totalAmount, async (tx) => {
+            // 사장님의 포인트 업데이트
+            await this.pointsRepository.incrementUserPointTx(userId, totalAmount, tx);
+        });
     };
 
     //모든 메뉴가 존재하는지 확인하고, 각 메뉴가 같은 음식점에 속해 있는지 확인합니다.
@@ -38,8 +54,7 @@ export default class OrdersService {
                 throw new HttpError.BadRequest(`${menu.name},${MESSAGES.MENU.COMMON.MENU_NOT_FOUND_IN_RESTAURANT}`);
             }
             // 각 orderItem에 price 계산
-            const itemTotalPrice = menu.price * item.quantity;
-            item.price = itemTotalPrice;
+            item.price = menu.price;
             // 총 가격 계산
             totalPrice += menu.price * item.quantity;
         }
@@ -59,6 +74,7 @@ export default class OrdersService {
         );
 
         await this.#checkUserPoint(userId, totalPrice);
+        console.log(totalPrice);
         return await this.orderRepository.createOrderTx(
             userId,
             restaurantId,

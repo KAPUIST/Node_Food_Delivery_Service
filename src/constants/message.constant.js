@@ -104,6 +104,8 @@ export const MESSAGES = {
         COMMON: {
             ORDER_NOT_FOUND: '해당 주문이 존재 하지않습니다.',
             RESTAURANT_ID_IS_REQUIRED: '레스토랑 Id는 필수 요소입니다.',
+            UNKNOWN_STATUS: '유효하지 않은 상태입니다.',
+            ALREADY_COMPLETED: '이미 정산이 완료된 주문입니다.',
         },
     },
     RESTAURANTS: {
