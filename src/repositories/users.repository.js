@@ -26,12 +26,19 @@ export class UsersRepository {
             where: condition,
             data: changeData
         })
+        return user;
     };
 
     //유저 삭제
     deleteUser=async(condition)=> {
-        const user=await this.prisma.delete({
+        const user=await this.prisma.users.delete({
             where:condition
         })
+        return user;
+    };
+
+    chargePoint=async(condition)=>{
+
     }
+    
 }

@@ -7,17 +7,18 @@ export const MESSAGES = {
                 DUPLICATED: '이미 가입 된 사용자입니다.',
             },
             PASSWORD: {
-                REQURIED: '비밀번호를 입력해 주세요.',
+                REQUIRED: '비밀번호를 입력해 주세요.',
                 MIN_LENGTH: `비밀번호는 4자리 이상이어야 합니다.`,
             },
             PASSWORD_CONFIRM: {
-                REQURIED: '비밀번호 확인을 입력해 주세요.',
-                NOT_MACHTED_WITH_PASSWORD: '입력 한 두 비밀번호가 일치하지 않습니다.',
+                REQUIRED: '비밀번호 확인을 입력해 주세요.',
+                NOT_MATCHED_WITH_PASSWORD: '입력 한 두 비밀번호가 일치하지 않습니다.',
             },
             NAME: {
-                REQURIED: '이름을 입력해 주세요.',
+                REQUIRED: '이름을 입력해 주세요.',
             },
             UNAUTHORIZED: '인증 정보가 유효하지 않습니다.',
+            FORBIDDEN: '접근 권한이 없습니다.',
             JWT: {
                 NO_TOKEN: '인증 정보가 없습니다.',
                 NOT_SUPPORTED_TYPE: '지원하지 않는 인증 방식입니다.',
@@ -31,6 +32,17 @@ export const MESSAGES = {
         },
         SIGN_IN: {
             SUCCEED: '로그인에 성공했습니다.',
+        },
+        SIGN_OUT: {
+            SUCCEED: '로그아웃에 성공했습니다.',
+        },
+        TOKEN: {
+            SUCCEED: '토큰 재발급에 성공했습니다.',
+        },
+    },
+    SEARCH: {
+        COMMON: {
+            KEYWORD: '검색 내용을 입력해 주세요.',
         },
     },
 };
