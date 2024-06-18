@@ -32,10 +32,10 @@ export class MenusRepository {
     getMenu = async ({ menuId, restaurantId }) => {
         return await prisma.menus.findUnique({
             where: {
-                id_restaurantId: {
+
                     id: menuId,
                     restaurantId: restaurantId
-                }
+
             }
         });
     };

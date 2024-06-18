@@ -10,6 +10,6 @@ router.use('/auth', authRouter);
 router.use('/users', usersRouter);
 router.use('/:restaurantId/menus', menusRouter);
 router.use('/search', searchRouter);
-router.use('/order', orderRouter);
+router.use('/orders', orderRouter);
 
 export default router;

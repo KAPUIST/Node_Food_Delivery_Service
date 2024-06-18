@@ -1,5 +1,7 @@
 import { HTTP_STATUS } from '../constants/http-status.constant.js';
-
+import { MESSAGES } from '../constants/message.constant.js';
+import { HttpError } from '../errors/http.error.js';
+import { OrderStatus } from '../constants/orders.constant.js';
 export default class OrderController {
     constructor(orderService) {
         this.orderService = orderService;
@@ -15,6 +17,47 @@ export default class OrderController {
 
             res.status(HTTP_STATUS.CREATED).json({
                 result: order,
+            });
+        } catch (error) {
+            next(error);
+        }
+    };
+    getOrderById = async (req, res, next) => {
+        try {
+            const { orderId } = req.params;
+            const userId = 2;
+            const order = await this.orderService.getOrderById(+orderId);
+            if (!order) {
+                throw new HttpError.NotFound(`${orderId}, ${MESSAGES.ORDER.COMMON.ORDER_NOT_FOUND}`);
+            }
+            const isOwner = await this.orderService.verifyRestaurantOwner(userId, order.restaurantId);
+            if (!isOwner) {
+                throw new HttpError.Forbidden(MESSAGES.RESTAURANTS.NOT_ALLOW);
+            }
+            res.status(HTTP_STATUS.OK).json({
+                result: order,
+            });
+        } catch (error) {
+            next(error);
+        }
+    };
+    getAllOrders = async (req, res, next) => {
+        try {
+            const userId = 2;
+            let { status, restaurantId } = req.query;
+            if (!restaurantId) {
+                throw new HttpError.BadRequest(MESSAGES.ORDER.COMMON.RESTAURANT_ID_IS_REQUIRED);
+            }
+            const isOwner = await this.orderService.verifyRestaurantOwner(userId, +restaurantId);
+            if (!isOwner) {
+                throw new HttpError.Forbidden(MESSAGES.RESTAURANTS.NOT_ALLOW);
+            }
+            if (status && !Object.values(OrderStatus).includes(status.toUpperCase())) {
+                status = undefined;
+            }
+            const orders = await this.orderService.getAllOrders(status, +restaurantId);
+            res.status(HTTP_STATUS.OK).json({
+                result: orders,
             });
         } catch (error) {
             next(error);

@@ -7,6 +7,22 @@ export default class OrdersService {
         this.menusRepository = menusRepository;
         this.pointsRepository = pointsRepository;
     }
+    getOrderById = async (orderId) => {
+        const order = await this.orderRepository.findOrderById(orderId);
+        return order;
+    };
+
+    getAllOrders = async (status, restaurantId) => {
+        if (status) {
+            return await this.orderRepository.findOrdersByStatus(status, restaurantId);
+        } else {
+            return await this.orderRepository.findRecentOrders(restaurantId);
+        }
+    };
+    verifyRestaurantOwner = async (userId, restaurantId) => {
+        return await this.orderRepository.isUserOwnerOfRestaurant(userId, restaurantId);
+    };
+
     //모든 메뉴가 존재하는지 확인하고, 각 메뉴가 같은 음식점에 속해 있는지 확인합니다.
     #validateAndCalculateTotalPrice = async (orderItems, restaurantId) => {
         let totalPrice = 0;
