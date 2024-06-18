@@ -100,4 +100,13 @@ export const MESSAGES = {
             NOT_ENOUGH_POINT: '포인트가 부족합니다.',
         },
     },
+    ORDER: {
+        COMMON: {
+            ORDER_NOT_FOUND: '해당 주문이 존재 하지않습니다.',
+            RESTAURANT_ID_IS_REQUIRED: '레스토랑 Id는 필수 요소입니다.',
+        },
+    },
+    RESTAURANTS: {
+        NOT_ALLOW: '권한이 존재하지않습니다.',
+    },
 };
