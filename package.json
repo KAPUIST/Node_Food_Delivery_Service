@@ -8,7 +8,8 @@
     "type": "module",
     "scripts": {
         "dev": "nodemon ./src/app.js",
-        "seed": "node ./src/utils/prisma/prisma.seed.js"
+        "seed": "node ./src/utils/prisma/prisma.seed.js",
+        "socket": "node ./src/utils/websocket/ws-client.js"
     },
     "dependencies": {
         "@prisma/client": "^5.15.0",
