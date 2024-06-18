@@ -1,6 +1,6 @@
 import Joi from 'joi';
-import { MESSAGES } from '../../constants/message.constant.js';
-import { AUTH_CONS } from '../../constants/auth.constant.js';
+import { MESSAGES } from '../../../constants/message.constant.js';
+import { AUTH_CONS } from '../../../constants/auth.constant.js';
 
 export const signInValidator = async (req, res, next) => {
     try {
