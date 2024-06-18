@@ -50,6 +50,12 @@ export const MESSAGES = {
             NOT_FOUND: '메뉴가 존재하지 않습니다.',
             MENU_NOT_FOUND_IN_RESTAURANT: '레스토랑 에서 메뉴를 가지고있지 않습니다.',
         },
+        UPDATE:{
+            SUCCEED: '메뉴가 수정되었습니다'
+        },
+        DELETE: {
+            SUCCEED: '메뉴가 삭제되었습니다' 
+        }
     },
     POINTS: {
         COMMON: {
