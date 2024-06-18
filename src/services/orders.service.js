@@ -1,12 +1,13 @@
 import { MESSAGES } from '../constants/message.constant.js';
 import { HttpError } from '../errors/http.error.js';
-
+import { notifyChangedOrderStatus, notifyNewOrder } from '../utils/websocket/websocket.js';
 export default class OrdersService {
     constructor(orderRepository, menusRepository, pointsRepository) {
         this.orderRepository = orderRepository;
         this.menusRepository = menusRepository;
         this.pointsRepository = pointsRepository;
     }
+
     getOrderById = async (orderId) => {
         const order = await this.orderRepository.findOrderById(orderId);
         return order;
@@ -21,7 +22,13 @@ export default class OrdersService {
     };
     // 주문 상태 업데이트 기능 추가
     updateOrderStatus = async (orderId, status) => {
-        return await this.orderRepository.updateOrderStatus(orderId, status);
+        const newOrderStatus = await this.orderRepository.updateOrderStatus(orderId, status);
+
+        if (newOrderStatus) {
+            // "고객님"에게 상태 변경 알림 보내기
+            notifyChangedOrderStatus(newOrderStatus.customerId, newOrderStatus.status);
+        }
+        return newOrderStatus;
     };
     //본인 레스토랑인지 확인하는 함수
     verifyRestaurantOwner = async (userId, restaurantId) => {
@@ -33,10 +40,19 @@ export default class OrdersService {
         const totalAmount = order.orderItems.reduce((total, item) => {
             return total + item.price * item.quantity;
         }, 0);
-        return await this.orderRepository.completeOrderTx(orderId, order.restaurantId, totalAmount, async (tx) => {
-            // 사장님의 포인트 업데이트
-            await this.pointsRepository.incrementUserPointTx(userId, totalAmount, tx);
-        });
+
+        const completedOrder = await this.orderRepository.completeOrderTx(
+            orderId,
+            order.restaurantId,
+            totalAmount,
+            async (tx) => {
+                // 사장님의 포인트 업데이트
+                await this.pointsRepository.incrementUserPointTx(userId, totalAmount, tx);
+            },
+        );
+
+        notifyChangedOrderStatus(completedOrder.customerId, completedOrder.status);
+        return completedOrder;
     };
 
     //모든 메뉴가 존재하는지 확인하고, 각 메뉴가 같은 음식점에 속해 있는지 확인합니다.
@@ -75,7 +91,7 @@ export default class OrdersService {
 
         await this.#checkUserPoint(userId, totalPrice);
 
-        return await this.orderRepository.createOrderTx(
+        const newOrder = await this.orderRepository.createOrderTx(
             userId,
             restaurantId,
             orderItemsWithPrice,
@@ -84,5 +100,13 @@ export default class OrdersService {
                 await this.pointsRepository.decrementUserPointTx(userId, totalPrice, tx);
             },
         );
+        // 레스토랑 ID를 기반으로 사장님 ID 조회
+        const ownerId = await this.orderRepository.findOwnerByRestaurantId(restaurantId);
+
+        // 새 주문이 생성된 후 "사장님"에게 알림 전송
+        if (ownerId) {
+            notifyNewOrder(ownerId); // 사장님에게 알림 전송
+        }
+        return newOrder;
     };
 }
