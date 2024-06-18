@@ -1,6 +1,6 @@
 import Joi from 'joi';
 import { MESSAGES } from '../../../constants/message.constant.js';
-import { ORDER_VALIDATOR } from '../../../constants/orders.constant.js';
+import { COMMON_ORDER_STATUS } from '../../../constants/orders.constant.js';
 
 export const updateOrderStatusValidator = async (req, res, next) => {
     try {
@@ -15,7 +15,7 @@ export const updateOrderStatusValidator = async (req, res, next) => {
         const getStatusSchema = Joi.object({
             status: Joi.string()
                 .required()
-                .valid(...Object.values(ORDER_VALIDATOR.STATUS))
+                .valid(...Object.values(COMMON_ORDER_STATUS))
                 .messages({
                     'string.base': MESSAGES.ORDER.COMMON.STATUS.BASE,
                     'any.required': MESSAGES.ORDER.COMMON.STATUS.REQUIRED,

@@ -14,15 +14,3 @@ export const COMMON_ORDER_STATUS = {
 export const COMPLETE_ORDER_STATUS = {
     DELIVERED: 'DELIVERED', // 배달 완료
 };
-
-export const ORDER_VALIDATOR = {
-    // 유효성 검사시 orderItems 배열 최소 길이
-    ARRAY_MIN_LENGTH: 1,
-    STATUS: {
-        ORDER_PLACED: 'ORDER_PLACED',
-        PREPARING: 'PREPARING',
-        OUT_FOR_DELIVERY: 'OUT_FOR_DELIVERY',
-        DELIVERED: 'DELIVERED',
-        CANCELED: 'CANCELED',
-    },
-};
