@@ -74,7 +74,7 @@ export default class OrdersService {
         );
 
         await this.#checkUserPoint(userId, totalPrice);
-        console.log(totalPrice);
+
         return await this.orderRepository.createOrderTx(
             userId,
             restaurantId,
