@@ -9,6 +9,7 @@
     "scripts": {
         "dev": "nodemon ./src/app.js",
         "seed": "node ./src/utils/prisma/prisma.seed.js",
+        "fakerSeed": "node ./src/utils/prisma/seed.js",
         "socket": "node ./src/utils/websocket/ws-client.js"
     },
     "dependencies": {
@@ -26,6 +27,7 @@
     "devDependencies": {
         "eslint": "^9.5.0",
         "nodemon": "^3.1.3",
-        "prettier": "^3.3.2"
+        "prettier": "^3.3.2",
+        "@faker-js/faker": "^8.4.1"
     }
 }
