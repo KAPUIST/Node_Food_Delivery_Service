@@ -3,38 +3,45 @@ export class RestaurantsRepository {
         this.prisma = prisma;
     }
 
-    findStore=async(condition)=>{
-        const restaurant=await this.prisma.Restaurants.findFirst({
-            where: condition
+    findStore = async (condition) => {
+        const restaurant = await this.prisma.Restaurants.findFirst({
+            where: condition,
         });
 
-        return restaurant;
-    }
-
-    makeStore=async(storeData) => {
-        const restaurant=await this.prisma.Restaurants.create({
-            data: storeData
-        })
         return restaurant;
     };
 
-    modifyStore=async(condition,changeData)=>{
+    makeStore = async (storeData) => {
+        const restaurant = await this.prisma.Restaurants.create({
+            data: storeData,
+        });
+        return restaurant;
+    };
+
+    modifyStore = async (condition, changeData) => {
         //먼저 본인의 상점을 탐색
 
-        const changedRestaurant=await this.prisma.Restaurants.update({
-            where: condition,data: changeData
-        })
-    
+        const changedRestaurant = await this.prisma.Restaurants.update({
+            where: condition,
+            data: changeData,
+        });
 
         return changedRestaurant;
-    }
+    };
 
-    deleteStore=async(condition)=>{
-        const deletedStore=await this.prisma.Restaurants.delete({
-            where:condition
+    deleteStore = async (condition) => {
+        const deletedStore = await this.prisma.Restaurants.delete({
+            where: condition,
         });
         return deletedStore;
-    }
+    };
 
-
+    findHeighRevenueRestaurant = async () => {
+        return await this.prisma.restaurants.findMany({
+            orderBy: {
+                totalRevenue: 'desc',
+            },
+            take: 5,
+        });
+    };
 }
