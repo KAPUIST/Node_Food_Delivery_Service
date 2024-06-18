@@ -8,4 +8,19 @@ export class PointsRepository {
             data: { condition },
         });
     };
+    findUserPoint = async (userId) => {
+        return await this.prisma.points.findUnique({ where: { userId } });
+    };
+    incrementUserPointTx = async (userId, point, tx) => {
+        return await tx.points.update({
+            where: { userId },
+            data: { point: { increment: point } },
+        });
+    };
+    decrementUserPointTx = async (userId, point, tx) => {
+        return await tx.points.update({
+            where: { userId },
+            data: { point: { decrement: point } },
+        });
+    };
 }
