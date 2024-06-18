@@ -3,4 +3,5 @@ export const ENV_CONS = {
     BCRYPT_ROUND: +process.env.BCRYPT_SOLT_ROUND,
     ACCESS_TOKEN_KEY: process.env.JWT_ACCESS_TOKEN_KEY,
     REFRESH_TOKEN_KEY: process.env.JWT_REFRESH_TOKEN_KEY,
+    REDIS_URL: process.env.REDIS_URL,
 };
