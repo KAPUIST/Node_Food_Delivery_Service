@@ -16,6 +16,19 @@ export class AuthController {
             next(err);
         }
     };
+    // 이메일 인증
+    verifyEmail = async (req, res, next) => {
+        try {
+            const { email } = req.body;
+            const code = await this.authService.verifyEmail(email);
+
+            return res
+                .status(HTTP_STATUS.OK)
+                .json({ status: HTTP_STATUS.OK, message: MESSAGES.AUTH.MAIL.SUCCEED, data: code });
+        } catch (err) {
+            next(err);
+        }
+    };
     // 로그인
     signInUser = async (req, res, next) => {
         try {

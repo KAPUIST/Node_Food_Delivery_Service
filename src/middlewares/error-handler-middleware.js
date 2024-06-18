@@ -1,9 +1,15 @@
 import { HTTP_STATUS } from '../constants/http-status.constant.js';
 
 export const errorHandler = (err, req, res, next) => {
-    // 조이 에러 처리 구현 후 추가
-    // Http Error 처리
+    // 조이 에러 처리
+    if (err.name === 'ValidationError') {
+        return res.status(HTTP_STATUS.BAD_REQUEST).json({
+            status: HTTP_STATUS.BAD_REQUEST,
+            message: err.message,
+        });
+    }
 
+    // Http Error 처리
     if (err.status && err.message) {
         return res.status(err.status).json({
             status: err.status,
