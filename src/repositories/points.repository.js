@@ -5,7 +5,7 @@ export class PointsRepository {
 
     addPoints = async (condition) => {
         await this.prisma.points.create({
-            data: { condition },
+            data: condition,
         });
     };
 }
