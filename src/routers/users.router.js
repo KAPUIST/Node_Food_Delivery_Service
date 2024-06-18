@@ -1,12 +1,15 @@
 import express from 'express';
 import {prisma} from "../utils/prisma/prisma.util.js";
 import bcrypt from "bcrypt";
-import { UsersController } from '../controllers/users.controller.js';
+import {UsersController } from '../controllers/users.controller.js';
 import {UsersService} from '../services/users.service.js'
-import { UsersRepository } from '../repositories/users.repository.js';
+import {UsersRepository } from '../repositories/users.repository.js';
+import {RestaurantsRepository} from '../repositories/restaurants.repository.js';
+
 import {validateAccessToken} from '../middlewares/require-access-token.middleware.js';
 
 const userRepository=new UsersRepository(prisma);
+const restaurantRepository=new RestaurantsRepository(prisma);
 const usersService= new UsersService(userRepository);
 const usersController=new UsersController(usersService);
 

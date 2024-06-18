@@ -1,11 +1,16 @@
 export const MESSAGES = {
     AUTH: {
+        ERROR: {
+            ETC: '예상치 못한 에러가 발생했습니다. 관리자에게 문의해 주세요.',
+            JOI_ERR_NAME: 'ValidationError',
+        },
         COMMON: {
             EMAIL: {
                 BASE: '이메일은 문자열입니다.',
                 REQUIRED: '이메일을 입력해 주세요.',
                 INVALID_FORMAT: '이메일 형식이 올바르지 않습니다.',
-                DUPLICATED: '이미 가입 된 사용자입니다.',
+                DUPLICATED_EMAIL: '이미 가입 된 사용자입니다.',
+                DUPLICATED_NAME: '동일한 닉네임이 있습니다.',
             },
             PASSWORD: {
                 BASE: '비밀번호는 문자열입니다.',
@@ -114,6 +119,8 @@ export const MESSAGES = {
         COMMON: {
             ORDER_NOT_FOUND: '해당 주문이 존재 하지않습니다.',
             RESTAURANT_ID_IS_REQUIRED: '레스토랑 Id는 필수 요소입니다.',
+            UNKNOWN_STATUS: '유효하지 않은 상태입니다.',
+            ALREADY_COMPLETED: '이미 정산이 완료된 주문입니다.',
         },
     },
     RESTAURANTS: {
