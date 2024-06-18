@@ -20,13 +20,13 @@ const router = express.Router();
 router.get('/me',validateAccessToken(userRepository),usersController.myInfo);
 
 //본인 프로필 수정
-router.patch('/myInfo',validateAccessToken(userRepository),usersController.myInfoEdit);
+router.patch('/my-info',validateAccessToken(userRepository),usersController.myInfoEdit);
 
 //본인 계정 삭제
 router.delete('/account',validateAccessToken(userRepository),usersController.deleteAccount);
 
 //본인 포인트 충전
-router.patch('/chargePoint');
+router.patch('/charge-point');
 
 
 export default router;

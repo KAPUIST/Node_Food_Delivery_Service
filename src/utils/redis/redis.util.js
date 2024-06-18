@@ -1,9 +1,9 @@
 import redis from 'redis';
-//import { REDIS_URL } from '../../constants/env.constant';
+import { ENV_CONS } from '../../constants/env.constant.js';
 
 // Redis 클라이언트 생성
 export const redisClient = redis.createClient({
-    url: 'rediss://default:AZ9wAAIncDFkN2Q3OWNmYTI0Njg0YzMwOTA5NjQ3Y2E2NDhmYjc0Y3AxNDA4MTY@stirring-sunbeam-40816.upstash.io:6379',
+    url: ENV_CONS.REDIS_URL,
 });
 
 redisClient.on('error', (err) => {

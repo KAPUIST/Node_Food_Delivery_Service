@@ -8,6 +8,8 @@ import { RefreshTokenRepository } from '../repositories/refresh-token.repository
 import { validateRefreshToken } from '../middlewares/require-refresh-token.middleware.js';
 import { requireRoles } from '../middlewares/require-roles.middleware.js';
 import { validateAccessToken } from '../middlewares/require-access-token.middleware.js';
+import { signUpValidator } from '../middlewares/validators/sign-up.validator.middleware.js';
+import { signInValidator } from '../middlewares/validators/sign-in.validator.middleware.js';
 
 const router = express.Router();
 
@@ -18,9 +20,11 @@ const authService = new AuthService(usersRepository, pointsRepository, refreshTo
 const authController = new AuthController(authService);
 
 // 회원가입 API
-router.post('/sign-up', authController.signUpUser);
+router.post('/sign-up', signUpValidator, authController.signUpUser);
+// 이메일 인증 API
+router.post('/email', authController.verifyEmail);
 // 로그인 API
-router.post('/sign-in', authController.signInUser);
+router.post('/sign-in', signInValidator, authController.signInUser);
 // 로그 아웃 API
 router.post('/sign-out', validateRefreshToken(usersRepository, refreshTokenRepository), authController.signOutUser);
 // 토큰 재발급 API
