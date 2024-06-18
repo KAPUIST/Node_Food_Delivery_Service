@@ -19,7 +19,7 @@ async function main() {
         const user1 = await prisma.users.create({
             data: {
                 email: 'customer1@example.com',
-                password: 'password123',
+                password: '$2b$10$1LOh6xAWYSZRIl0AjuDLA.HR3//CVLE9ahxqPp1/Gz3PuCyYLQN0S',
                 role: 'CUSTOMER',
                 city: '서울',
                 address: '강남구 역삼동 123-4',
@@ -31,7 +31,7 @@ async function main() {
         const user2 = await prisma.users.create({
             data: {
                 email: 'owner1@example.com',
-                password: 'password123',
+                password: '$2b$10$1LOh6xAWYSZRIl0AjuDLA.HR3//CVLE9ahxqPp1/Gz3PuCyYLQN0S',
                 role: 'OWNER',
                 city: '서울',
                 address: '강남구 삼성동 567-8',
@@ -43,7 +43,7 @@ async function main() {
         const user3 = await prisma.users.create({
             data: {
                 email: 'customer2@example.com',
-                password: 'password123',
+                password: '$2b$10$1LOh6xAWYSZRIl0AjuDLA.HR3//CVLE9ahxqPp1/Gz3PuCyYLQN0S',
                 role: 'CUSTOMER',
                 city: '서울',
                 address: '서초구 서초동 789-1',
@@ -55,7 +55,7 @@ async function main() {
         const user4 = await prisma.users.create({
             data: {
                 email: 'customer3@example.com',
-                password: 'password123',
+                password: '$2b$10$1LOh6xAWYSZRIl0AjuDLA.HR3//CVLE9ahxqPp1/Gz3PuCyYLQN0S',
                 role: 'CUSTOMER',
                 city: '서울',
                 address: '용산구 한남동 123-2',
@@ -183,7 +183,7 @@ async function main() {
                 orderId: order1.id,
                 menuId: menu1.id,
                 quantity: 2,
-                price: menu1.price * 2, // quantity에 맞게 가격 계산
+                price: menu1.price, // quantity에 맞게 가격 계산
             },
         });
 
@@ -192,7 +192,7 @@ async function main() {
                 orderId: order1.id,
                 menuId: menu2.id,
                 quantity: 1,
-                price: menu2.price * 1, // 참치 사시미 1개 주문
+                price: menu2.price, // 참치 사시미 1개 주문
             },
         });
 
@@ -212,7 +212,7 @@ async function main() {
                 orderId: order2.id,
                 menuId: menu3.id,
                 quantity: 1,
-                price: menu3.price * 1, // quantity에 맞게 가격 계산
+                price: menu3.price, // quantity에 맞게 가격 계산
             },
         });
 
@@ -221,7 +221,7 @@ async function main() {
                 orderId: order2.id,
                 menuId: menu4.id,
                 quantity: 1,
-                price: menu4.price * 1, // 우동 1개 주문
+                price: menu4.price, // 우동 1개 주문
             },
         });
 
@@ -244,7 +244,7 @@ async function main() {
                 orderId: order3.id,
                 menuId: menu1.id,
                 quantity: 2,
-                price: totalOrderPrice3_1, // 스시 롤 2개,  가격 계산
+                price: menu1.price, // 스시 롤 2개,  가격 계산
             },
         });
 
@@ -253,7 +253,7 @@ async function main() {
                 orderId: order3.id,
                 menuId: menu2.id,
                 quantity: 1,
-                price: totalOrderPrice3_2, // 참치 사시미 1개 가격 계산
+                price: menu2.price, // 참치 사시미 1개 가격 계산
             },
         });
 
