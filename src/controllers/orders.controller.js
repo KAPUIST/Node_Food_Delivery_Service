@@ -1,7 +1,7 @@
 import { HTTP_STATUS } from '../constants/http-status.constant.js';
 import { MESSAGES } from '../constants/message.constant.js';
 import { HttpError } from '../errors/http.error.js';
-import { CompleteOrderStatus, OrderStatus, CommonOrderStatus } from '../constants/orders.constant.js';
+import { COMPLETE_ORDER_STATUS, ORDER_STATUS, COMMON_ORDER_STATUS } from '../constants/orders.constant.js';
 export default class OrderController {
     constructor(orderService) {
         this.orderService = orderService;
@@ -30,6 +30,7 @@ export default class OrderController {
             if (!order) {
                 throw new HttpError.NotFound(` 주문 번호 : ${orderId}, ${MESSAGES.ORDER.COMMON.ORDER_NOT_FOUND}`);
             }
+
             const isOwner = await this.orderService.verifyRestaurantOwner(userId, order.restaurantId);
             if (!isOwner) {
                 throw new HttpError.Forbidden(MESSAGES.RESTAURANTS.NOT_ALLOW);
@@ -52,7 +53,7 @@ export default class OrderController {
             if (!isOwner) {
                 throw new HttpError.Forbidden(MESSAGES.RESTAURANTS.NOT_ALLOW);
             }
-            if (status && !Object.values(OrderStatus).includes(status.toUpperCase())) {
+            if (status && !Object.values(ORDER_STATUS).includes(status.toUpperCase())) {
                 status = undefined;
             }
             const orders = await this.orderService.getAllOrders(status, +restaurantId);
@@ -69,14 +70,14 @@ export default class OrderController {
             const { status } = req.body; // 새로운 상태 값
             const userId = req.user.id;
 
-            if (!Object.values(CommonOrderStatus).includes(status.toUpperCase())) {
+            if (!Object.values(COMMON_ORDER_STATUS).includes(status.toUpperCase())) {
                 throw new HttpError.BadRequest(MESSAGES.ORDER.COMMON.UNKNOWN_STATUS);
             }
             const order = await this.orderService.getOrderById(+orderId);
             if (!order) {
                 throw new HttpError.NotFound(`주문 번호 : ${orderId}, ${MESSAGES.ORDER.COMMON.ORDER_NOT_FOUND}`);
             }
-            if (order.status === CompleteOrderStatus.DELIVERED) {
+            if (order.status === COMPLETE_ORDER_STATUS.DELIVERED) {
                 throw new HttpError.BadRequest(`주문 번호 : ${orderId}, ${MESSAGES.ORDER.COMMON.ALREADY_COMPLETED}`);
             }
             const isOwner = await this.orderService.verifyRestaurantOwner(userId, order.restaurantId);
@@ -101,7 +102,7 @@ export default class OrderController {
             if (!order) {
                 throw new HttpError.NotFound(`주문 번호 : ${orderId}, ${MESSAGES.ORDER.COMMON.ORDER_NOT_FOUND}`);
             }
-            if (order.status === CompleteOrderStatus.DELIVERED) {
+            if (order.status === COMPLETE_ORDER_STATUS.DELIVERED) {
                 throw new HttpError.BadRequest(`주문 번호 : ${orderId}, ${MESSAGES.ORDER.COMMON.ALREADY_COMPLETED}`);
             }
             const isOwner = await this.orderService.verifyRestaurantOwner(userId, order.restaurantId);
