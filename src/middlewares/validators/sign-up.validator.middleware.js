@@ -17,7 +17,6 @@ export const signUpValidator = async (req, res, next) => {
                     'any.required': MESSAGES.AUTH.COMMON.EMAIL.REQUIRED,
                     'string.email': MESSAGES.AUTH.COMMON.EMAIL.INVALID_FORMAT,
                 }),
-
             password: Joi.string().min(AUTH_CONS.PASSWORD_MIN_LENGTH).required().messages({
                 'string.base': MESSAGES.AUTH.COMMON.PASSWORD.BASE,
                 'string.min': MESSAGES.AUTH.COMMON.PASSWORD.MIN,
