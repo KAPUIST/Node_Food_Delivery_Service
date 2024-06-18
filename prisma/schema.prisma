@@ -20,8 +20,9 @@ enum CuisinType {
 }
 
 enum OrderStatus {
-  PREPARING
-  DELIVERY
+  ORDER_PLACED
+  PREPARING  
+  OUT_FOR_DELIVERY
   DELIVERED
   CANCELED
 }
@@ -109,7 +110,7 @@ model Orders {
   id Int @id @default(autoincrement()) 
   customerId Int @map("customer_id")
   restaurantId Int @map("restaurant_id")
-  status OrderStatus @default(PREPARING) 
+  status OrderStatus @default(ORDER_PLACED) 
   createdAt DateTime @map("created_at") @default(now())
   updatedAt DateTime @updatedAt @map("updated_at")
 

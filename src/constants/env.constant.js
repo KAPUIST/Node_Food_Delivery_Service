@@ -9,4 +9,5 @@ export const ENV_CONS = {
     MAIL_PORT: process.env.MAIL_PORT,
     MAIL_AUTH_USER: process.env.MAIL_AUTH_USER,
     MAIL_AUTH_PASS: process.env.MAIL_AUTH_PASS,
+    REDIS_URL: process.env.REDIS_URL,
 };
