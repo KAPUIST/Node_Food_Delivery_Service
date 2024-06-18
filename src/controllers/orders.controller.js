@@ -105,9 +105,7 @@ export default class OrderController {
             }
             const isOwner = await this.orderService.verifyRestaurantOwner(userId, order.restaurantId);
             if (!isOwner) {
-                return res.status(HTTP_STATUS.FORBIDDEN).json({
-                    message: 'You do not have permission to complete this order',
-                });
+                throw new HttpError.Forbidden(MESSAGES.RESTAURANTS.NOT_ALLOW);
             }
 
             // 주문 상태를 "배달 완료"로 업데이트
