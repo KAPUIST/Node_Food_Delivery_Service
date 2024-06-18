@@ -63,6 +63,7 @@ async function main() {
                 phoneNumber: '010-3456-7890',
             },
         });
+        å;
 
         // Points 초기 설정
         await prisma.points.create({
