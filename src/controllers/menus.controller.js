@@ -3,6 +3,7 @@ import { HTTP_STATUS } from '../constants/http-status.constant.js';
 import { MESSAGES } from '../constants/message.constant.js';
 
 export class MenusController {
+   
     menusService = new MenusService();
 
     createMenu = async (req, res, next) => {
@@ -17,13 +18,13 @@ export class MenusController {
                 ownerId,
             );
 
-            return res.status(HTTP_STATUS.CREATED).json({ data: createdMenu, message: MESSAGES.MENU.CREATED });
-        } catch (err) {
-            next(err);
+            return res.status(HTTP_STATUS.CREATED).json({ data: createdMenu, message: MESSAGES.MENU.CREATED.SUCCEED });
+        } catch (error) {
+            next(error);
         }
     };
 
-    getMenus = async (req, res, next) => {
+    getManyMenus = async (req, res, next) => {
         try {
             let { sort } = req.query;
             sort = sort?.toLowerCase();
@@ -35,8 +36,21 @@ export class MenusController {
             const { restaurantId } = req.params;
             const data = await this.menusService.getManyMenus({ restaurantId, sort });
             return res.status(HTTP_STATUS.OK).json({ data });
-        } catch (err) {
-            next(err);
+        } catch (error) {
+            next(error);
+        }
+    };
+
+    getMenu = async (req, res, next) => {
+        try {
+            const { restaurantId } = req.params;
+            const { id } = req.body;
+
+            const data = await this.menusService.getMenu({ id, restaurantId });
+            
+            return res.status(HTTP_STATUS.OK).json({ data });
+        } catch (error) {
+            next(error);
         }
     };
 
@@ -55,8 +69,8 @@ export class MenusController {
             });
 
             return res.status(HTTP_STATUS.OK).json({ data, message: MESSAGES.MENU.UPDATE.SUCCEED });
-        } catch (err) {
-            next(err);
+        } catch (error) {
+            next(error);
         }
     };
 
@@ -68,8 +82,8 @@ export class MenusController {
             const data = await this.menusService.deleteMenu({ id, restaurantId, ownerId });
 
             return res.status(HTTP_STATUS.OK).json({ data, message: MESSAGES.MENU.DELETE.SUCCEED });
-        } catch (err) {
-            next(err);
+        } catch (error) {
+            next(error);
         }
     };
 }

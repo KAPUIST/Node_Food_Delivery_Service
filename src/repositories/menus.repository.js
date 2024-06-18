@@ -19,13 +19,13 @@ export class MenusRepository {
             },
         });
 
-        return data.map(menu => ({
-            id: menu.id,
-            restaurantId: menu.restaurantId,
-            name: menu.name,
-            price: menu.price,
-            createdAt: menu.createdAt,
-            updatedAt: menu.updatedAt,
+        return data.map(menus => ({
+            id: menus.id,
+            restaurantId: menus.restaurantId,
+            name: menus.name,
+            price: menus.price,
+            createdAt: menus.createdAt,
+            updatedAt: menus.updatedAt,
         }));
     };
 
@@ -37,6 +37,12 @@ export class MenusRepository {
                     restaurantId: restaurantId
 
             }
+        });
+    };
+
+    getRestaurantById = async (restaurantId) => {
+        return await prisma.restaurants.findUnique({
+            where: { id: restaurantId }
         });
     };
 
