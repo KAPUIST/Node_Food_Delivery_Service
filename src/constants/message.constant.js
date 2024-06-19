@@ -146,4 +146,5 @@ export const MESSAGES = {
         DELETE:{
             SUCCEED: '리뷰가 삭제되었습니다.',
         },
-};
+}
+}
