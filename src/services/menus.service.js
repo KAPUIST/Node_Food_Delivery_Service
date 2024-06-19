@@ -1,75 +1,75 @@
-import { MenusRepository } from '../repositories/menus.repository.js'
+import { MenusRepository } from '../repositories/menus.repository.js';
 import { HttpError } from '../errors/http.error.js';
 import { MESSAGES } from '../constants/message.constant.js';
 
 export class MenusService {
-    menusRepository = new MenusRepository();
-
-    createMenu = async (restaurantId, name, price, ownerId) => {
-        const data = await this.menusRepository.createMenu({
-            restaurantId, name, price
-        });
-
-        const restaurant = await this.menusRepository.getRestaurantById(restaurantId);
-
-        if (restaurant.ownerId !== ownerId) {
-            throw new HttpError.Forbidden(MESSAGES.AUTH.FORBIDDEN);
-        }
-
-        return data;
-    };
-
-    getManyMenus = async ({ restaurantId }) => {
-        const data = await this.menusRepository.getManyMenus({ restaurantId });
-
-        return data;
-    };
-
-    getMenu = async ({ id, restaurantId}) => {
-        const data = await this.menusRepository.getManyMenus({ id, restaurantId });
-
-        if(!data) {
-            throw new HttpError.NotFound(MESSAGES.MENU.COMMON.NOT_FOUND);
-        }
-
-        return data;
+    constructor(menusRepository, restaurantRepository) {
+        this.menusRepository = menusRepository;
+        this.restaurantRepository = restaurantRepository;
     }
 
-    updateMenu = async ({ id, restaurantId, name, price, ownerId }) => {
-        const existedMenu = await this.menusRepository.getMenu({ menuId: id, restaurantId });
-
-        if (!existedMenu) {
-            throw new HttpError.NotFound(MESSAGES.MENU.COMMON.NOT_FOUND);
+    createMenu = async (name, price, ownerId) => {
+        //유저가 어떤 업장을 소유하고있는가?
+        const restaurant = await this.restaurantRepository.findStore({ ownerId });
+        if (!restaurant) {
+            throw new HttpError.NotFound(MESSAGES.RESTAURANTS.NOT_ALLOW);
         }
 
-        const restaurant = await this.menusRepository.getRestaurantById(restaurantId);
-
-        if (restaurant.ownerId !== ownerId) {
-            throw new HttpError.Forbidden(MESSAGES.AUTH.FORBIDDEN);
-        }
-
-        const data = await this.menusRepository.updateMenu({
-            id, restaurantId, name, price
+        const data = await this.menusRepository.createMenu({
+            restaurantId: restaurant.id,
+            name,
+            price,
         });
 
         return data;
     };
 
-    deleteMenu = async ({ id, restaurantId, ownerId }) => {
-        const existedMenu = await this.menusRepository.getMenu({ menuId: id, restaurantId });
+    getManyMenus = async ({ restaurantId, sort }) => {
+        const data = await this.menusRepository.getManyMenus({ restaurantId, sort });
+        return data;
+    };
+
+    getMenu = async ({ id, restaurantId }) => {
+        const data = await this.menusRepository.getManyMenus({ id, restaurantId });
+
+        if (!data) {
+            throw new HttpError.NotFound(MESSAGES.MENU.COMMON.NOT_FOUND);
+        }
+
+        return data;
+    };
+
+    updateMenu = async ({ menuId, name, price, ownerId }) => {
+        const restaurant = await this.restaurantRepository.findStore({ ownerId });
+        if (!restaurant) {
+            throw new HttpError.NotFound(MESSAGES.RESTAURANTS.NOT_ALLOW);
+        }
+        const existedMenu = await this.menusRepository.getMenu({ menuId, restaurantId: restaurant.id });
+
+        if (!existedMenu) {
+            throw new HttpError.NotFound(MESSAGES.MENU.COMMON.NOT_FOUND);
+        }
+        const data = await this.menusRepository.updateMenu({
+            menuId,
+            name,
+            price,
+        });
+
+        return data;
+    };
+
+    deleteMenu = async ({ menuId, ownerId }) => {
+        const restaurant = await this.restaurantRepository.findStore({ ownerId });
+        if (!restaurant) {
+            throw new HttpError.NotFound(MESSAGES.RESTAURANTS.NOT_ALLOW);
+        }
+        const existedMenu = await this.menusRepository.getMenu({ menuId, restaurantId: restaurant.id });
 
         if (!existedMenu) {
             throw new HttpError.NotFound(MESSAGES.MENU.COMMON.NOT_FOUND);
         }
 
-        const restaurant = await this.menusRepository.getRestaurantById(restaurantId);
-
-
-        if (restaurant.ownerId !== ownerId) {
-            throw new HttpError.Forbidden(MESSAGES.AUTH.FORBIDDEN);
-        }
-
-        const data = await this.menusRepository.deleteMenu({ id, restaurantId });
+        const data = await this.menusRepository.deleteMenu({ menuId });
 
         return data;
     };
