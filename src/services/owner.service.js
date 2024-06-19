@@ -42,27 +42,37 @@ export class OwnerService {
             return error;
         }
 
+        //정보 삭제
+
+        delete store.id;
+        delete store.ownerId;
+        delete store.flag;
+
         return store;
     }
 
     //업장 수정하기
     updateStore=async(condition,changeData)=> {
         console.log(condition);
-        const store=await this.findStore(condition);
+        const currentStore=await this.findStore(condition);
 
-        if (!store) {
+        if (!currentStore) {
             const error={status:404,errorMessage:"해당 업장이 존재하지 않습니다!"};
             return error;
         }
 
         //condition값에 id값도 추가
-        condition.id=store.id;
+        condition.id=currentStore.id;
 
         const modifiedStore=await this.RestaurantRepository.modifyStore(condition,changeData);
         
-        const result=modifiedStore;
+        const store=modifiedStore;
 
-        return result;
+        delete store.id;
+        delete store.ownerId;
+        delete store.flag;
+
+        return store;
     }
 
     //업장 삭제하기
@@ -89,6 +99,7 @@ export class OwnerService {
         return deletedStore;
     }
 
+    //업장 복구하기
     restoreStore=async(condition,number)=> {
 
         //에러타일
@@ -100,10 +111,13 @@ export class OwnerService {
         const not_ExistsStore=await this.RestaurantRepository.all_FindNoneExistStore(condition);
         
         condition.id=not_ExistsStore[number].id;
-        const restoreStore=await this.RestaurantRepository.restoreStore(condition);
+        const store=await this.RestaurantRepository.restoreStore(condition);
 
-        
-        return restoreStore;
+        delete store.id;
+        delete store.ownerId;
+        delete store.flag;
+
+        return store;
     }
 
 }

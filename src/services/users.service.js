@@ -22,6 +22,13 @@ export class UsersService {
             const error={status:400,errorMessage:"존재하지 않는 계정입니다."};
             return error;
         }
+        //정보 삭제
+        delete user.password;
+        delete user.id;
+        delete user.role;
+        delete user.phoneNumber;
+        delete user.updatedAt;
+
         return user;
     }
 

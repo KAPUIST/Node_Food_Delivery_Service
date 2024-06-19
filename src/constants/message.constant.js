@@ -71,7 +71,7 @@ export const MESSAGES = {
             },
             VERIFICATION_CODE: {
                 INCONSISTENT: '발송된 인증 코드와 다릅니다.',
-                EXPIRED: '메일 인증이 만료되었습니다.',
+                EXPIRED: '메일 인증코드가 만료되었습니다.',
                 SUCCEED: '메일 인증이 완료되었습니다.',
             },
         },
