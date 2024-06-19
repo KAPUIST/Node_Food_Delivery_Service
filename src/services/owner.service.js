@@ -71,12 +71,16 @@ export class OwnerService {
         const store=await this.RestaurantRepository.findStore(condition);
         
         
+
+        console.log(condition);
+        
         //업장이 존재하지 않는 경우에 대한 케이스
         if (!store) {
             const error={status:404,errorMessage:"업장이 존재하지 않습니다!"};
             return error;
         }
-        
+
+        condition.id=store.id;
 
         //업장이 혹여 여러 존재할 경우 제일 첫번째의 하나를 제거
         condition.id=store.id;

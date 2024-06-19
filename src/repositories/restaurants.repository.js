@@ -4,6 +4,7 @@ export class RestaurantsRepository {
     }
 
     findStore = async (condition) => {
+        condition.flag="EXISTS";
         const restaurant = await this.prisma.Restaurants.findFirst({
             where: condition,
         });
@@ -30,8 +31,8 @@ export class RestaurantsRepository {
     };
 
     deleteStore = async (condition) => {
-        const deletedStore = await this.prisma.Restaurants.delete({
-            where: condition,
+        const deletedStore = await this.prisma.Restaurants.update({
+            where: condition,data:{flag:"NOT_EXISTS"}
         });
         return deletedStore;
     };
