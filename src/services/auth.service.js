@@ -25,8 +25,10 @@ export class AuthService {
         if (latestVerification.code !== +verificationCode) {
             throw new HttpError.Unauthorized(MESSAGES.AUTH.SIGN_UP.VERIFICATION_CODE.INCONSISTENT);
         }
+
         const existUserByEmail = await this.usersRepository.findUser({ email });
         const existUserByName = await this.usersRepository.findUser({ name });
+
 
         if (existUserByEmail) {
             throw new HttpError.Conflict(MESSAGES.AUTH.COMMON.EMAIL.DUPLICATED_EMAIL);
