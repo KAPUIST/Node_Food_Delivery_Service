@@ -144,4 +144,56 @@ export const MESSAGES = {
     RESTAURANTS: {
         NOT_ALLOW: '권한이 존재하지않습니다.',
     },
+    USER: {
+        COMMON: {
+            PASSWORD: {
+                BASE: '비밀번호는 문자열입니다.',
+                REQUIRED: '비밀번호를 입력해 주세요.',
+                MIN: '비밀번호는 6자리 이상입니다.',
+                INCONSISTENT: '비밀번호가 일치하지 않습니다.',
+            },
+            CITY: {
+                BASE: '지역은 문자열입니다.',
+                REQUIRED: '지역을 입력해 주세요.',
+            },
+            ADDRESS: {
+                BASE: '주소는 문자열입니다.',
+                REQUIRED: '주소를 입력해 주세요.',
+            },
+            PHONE_NUMBER: {
+                BASE: '전화번호는 문자열입니다.',
+                REQUIRED: '전화번호를 입력해 주세요.',
+            },
+            POINT: {
+                BASE: '포인트는 정수형입니다.',
+                REQUIRED: '포인트를 입력해 주세요.',
+            },
+        },
+    },
+    OWNER: {
+        COMMON: {
+            NAME: {
+                BASE: '상호명은 문자열입니다.',
+                REQUIRED: '상호명을 입력해 주세요.',
+                DUPLICATED: '상호명이 이미 존재합니다.',
+            },
+            CITY: {
+                BASE: '지역은 문자열입니다.',
+                REQUIRED: '지역을 입력해 주세요.',
+            },
+            ADDRESS: {
+                BASE: '주소는 문자열입니다.',
+                REQUIRED: '주소를 입력해 주세요.',
+            },
+            CUISINE_TYPE: {
+                BASE: '음식 카테고리는 문자열입니다.',
+                REQUIRED: '음식 카테고리를 입력해 주세요.',
+                INVALID_CUISINE_TYPE: '유효하지 않은 음식 카테고리 입니다.',
+            },
+            NUMBER: {
+                BASE: '복구할 업장 번호는 정수형입니다.',
+                REQUIRED: '복구할 업장 번호를 입력해 주세요.',
+            },
+        },
+    },
 };

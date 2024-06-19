@@ -60,14 +60,14 @@ export const signUpValidator = async (req, res, next) => {
             }),
             phoneNumber: Joi.string().required().messages({
                 'string.base': MESSAGES.AUTH.COMMON.PHONE_NUMBER.BASE,
-                'string.empty': MESSAGES.AUTH.COMMON.PHONE_NUMBER.BASE,
-                'any.required': MESSAGES.AUTH.COMMON.PHONE_NUMBER.BASE,
+                'string.empty': MESSAGES.AUTH.COMMON.PHONE_NUMBER.REQUIRED,
+                'any.required': MESSAGES.AUTH.COMMON.PHONE_NUMBER.REQUIRED,
             }),
             point: Joi.number().integer().required().messages({
                 'number.base': MESSAGES.AUTH.COMMON.POINT.BASE,
                 'number.integer': MESSAGES.AUTH.COMMON.POINT.BASE,
-                'number.empty': MESSAGES.AUTH.COMMON.POINT.BASE,
-                'any.required': MESSAGES.AUTH.COMMON.POINT.BASE,
+                'number.empty': MESSAGES.AUTH.COMMON.POINT.REQUIRED,
+                'any.required': MESSAGES.AUTH.COMMON.POINT.REQUIRED,
             }),
 
             verificationCode: Joi.number().required().messages({
