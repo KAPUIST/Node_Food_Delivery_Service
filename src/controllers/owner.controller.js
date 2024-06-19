@@ -60,4 +60,20 @@ export class OwnerController {
 
         return res.status(200).json({ Message: '성공적으로 폐업 완료' });
     };
+    restoreStore=async(req,res,next)=>{
+        const user=req.user;
+        const {number}=req.body;
+        const condition={ownerId:req.user.id};
+
+        //인덱스 값으로 전환하여 number는 -1로 서비스 계층에 넘긴다.
+        const restoreStore=await this.OwnerService.restoreStore(condition,number-1);
+        
+        //에러타일
+        if (restoreStore.errorMessage) {
+            return  res.status(restoreStore.status).json({ Message: restoreStore.errorMessage });
+        }
+
+
+        return res.status(201).json({restoreStore});
+    }
 }

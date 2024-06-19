@@ -12,6 +12,26 @@ export class RestaurantsRepository {
         return restaurant;
     };
 
+    all_FindNoneExistStore= async (condition) => {
+        condition.flag="NOT_EXISTS";
+        const restaurant = await this.prisma.Restaurants.findMany({
+            where: condition,
+        });
+
+        return restaurant;
+    };
+
+    restoreStore=async(condition)=> {
+        const restoreStore=await this.prisma.Restaurants.update({
+            where: condition,data:{
+                flag:"EXISTS"
+            }
+        });
+        return restoreStore;
+    }
+
+
+
     makeStore = async (storeData) => {
         const restaurant = await this.prisma.Restaurants.create({
             data: storeData,

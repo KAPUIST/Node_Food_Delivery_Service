@@ -32,7 +32,8 @@ router.patch('/store',validateAccessToken(userRepository),ownerController.update
 //사장 업장 삭제
 router.delete('/store',validateAccessToken(userRepository),ownerController.deleteStore);
 
-
+//사장 업장 복원
+router.patch('/restore',validateAccessToken(userRepository),ownerController.restoreStore);
 
 
 
