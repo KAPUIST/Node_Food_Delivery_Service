@@ -16,6 +16,7 @@ export class AuthService {
     // 회원가입 - role이 CUSTOMER이면 100만 포인트 지급, OWNER면 작성한 point 만큼 지급
     signUpUser = async ({ email, password, role, city, address, name, phoneNumber, point, verificationCode }) => {
         // 이메일 인증 제외하고 가입하고 싶으시면 19~25 주석처리 하시면 됩니다.
+
         // const latestVerification = EmailVerificationUtil.codes[email];
         // if (!latestVerification || latestVerification.code !== +verificationCode) {
         //     throw new HttpError.Unauthorized(MESSAGES.AUTH.SIGN_UP.VERIFICATION_CODE.INCONSISTENT);
@@ -24,7 +25,14 @@ export class AuthService {
         //     throw new HttpError.Unauthorized(MESSAGES.AUTH.SIGN_UP.VERIFICATION_CODE.EXPIRED);
         // }
 
-        const existUser = await this.usersRepository.findUser({ email });
+        const latestVerification = EmailVerificationUtil.codes[email];
+        if (!latestVerification || latestVerification.code !== +verificationCode) {
+            throw new HttpError.Unauthorized(MESSAGES.AUTH.SIGN_UP.VERIFICATION_CODE.INCONSISTENT);
+        }
+        if (EmailVerificationUtil.isCodeExpired(latestVerification.timestamp)) {
+            throw new HttpError.Unauthorized(MESSAGES.AUTH.SIGN_UP.VERIFICATION_CODE.EXPIRED);
+        }
+
         const existUserByEmail = await this.usersRepository.findUser({ email });
         const existUserByName = await this.usersRepository.findUser({ name });
 

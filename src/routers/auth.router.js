@@ -8,8 +8,8 @@ import { RefreshTokenRepository } from '../repositories/refresh-token.repository
 import { validateRefreshToken } from '../middlewares/require-refresh-token.middleware.js';
 import { requireRoles } from '../middlewares/require-roles.middleware.js';
 import { validateAccessToken } from '../middlewares/require-access-token.middleware.js';
-import { signUpValidator } from '../middlewares/validators/sign-up.validator.middleware.js';
-import { signInValidator } from '../middlewares/validators/sign-in.validator.middleware.js';
+import { signUpValidator } from '../middlewares/validators/auth/sign-up.validator.middleware.js';
+import { signInValidator } from '../middlewares/validators/auth/sign-in.validator.middleware.js';
 
 const router = express.Router();
 
@@ -18,7 +18,6 @@ const pointsRepository = new PointsRepository(prisma);
 const usersRepository = new UsersRepository(prisma);
 const authService = new AuthService(usersRepository, pointsRepository, refreshTokenRepository);
 const authController = new AuthController(authService);
-
 // 회원가입 API
 router.post('/sign-up', signUpValidator, authController.signUpUser);
 // 이메일 인증 API

@@ -47,7 +47,7 @@ export const MESSAGES = {
                 REQUIRED: '전화번호를 입력해 주세요.',
             },
             POINT: {
-                BASE: '포인트는 숫자입니다.',
+                BASE: '포인트는 정수형입니다.',
                 REQUIRED: '포인트를 입력해 주세요.',
             },
             VERIFICATION_CODE: {
@@ -92,6 +92,7 @@ export const MESSAGES = {
     SEARCH: {
         COMMON: {
             KEYWORD: '검색 내용을 입력해 주세요.',
+            BASE: '검색 내용은 문자열이어야 합니다.',
         },
     },
     MENU: {
@@ -121,6 +122,33 @@ export const MESSAGES = {
             RESTAURANT_ID_IS_REQUIRED: '레스토랑 Id는 필수 요소입니다.',
             UNKNOWN_STATUS: '유효하지 않은 상태입니다.',
             ALREADY_COMPLETED: '이미 정산이 완료된 주문입니다.',
+
+            ORDER_ITEMS: {
+                BASE: 'orderItems는 배열 형태여야 합니다.',
+                MIN: 'orderItems의 길이는 1이상이어야 합니다.',
+                REQUIRED: 'orderItems를 입력해 주세요.',
+            },
+            RESTAURANT_ID: {
+                BASE: 'restaurantId는 숫자입니다.',
+                REQUIRED: 'restaurantId를 입력해 주세요.',
+            },
+            MENU_ID: {
+                BASE: 'quantity는 정수형입니다.',
+                REQUIRED: 'quantity를 입력해 주세요.',
+            },
+            QUANTITY: {
+                BASE: 'menuId는 정수형입니다.',
+                REQUIRED: 'menuId를 입력해 주세요.',
+            },
+            STATUS: {
+                BASE: '주문 상태는 문자열입니다.',
+                REQUIRED: '주문 상태를를 입력해 주세요.',
+                INVALID_STATUS: '유효하지 않은 주문 상태입니다.',
+            },
+            ORDER_ID: {
+                BASE: '주문 ID는 정수형입니다.',
+                REQUIRED: '주문 ID를 입력해 주세요.',
+            },
         },
     },
     RESTAURANTS: {
