@@ -6,6 +6,7 @@ export const requireRoles = (params) => {
     return (req, res, next) => {
         try {
             const user = req.user;
+
             const hasPermission = user && params.includes(user.role);
             // role이 배열에 포함이면 인증
             if (!hasPermission) {

@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken';
 import { ENV_CONS } from '../constants/env.constant.js';
 import { MESSAGES } from '../constants/message.constant.js';
 import { HttpError } from '../errors/http.error.js';
-
+import { redisClient } from '../utils/redis/redis.util.js';
 export const validateAccessToken = (usersRepository) => {
     return async (req, res, next) => {
         try {
@@ -36,12 +36,16 @@ export const validateAccessToken = (usersRepository) => {
             }
             // 유저 DB에 접근하는 usersRepository 클래스 메서드를 통해 쿼리하도록 리팩토링
             const condition = { id: decodedToken.id };
-            const user = await usersRepository.findUser(condition);
+            let user = await redisClient.get(`session:${condition.id}`);
+            if (user) {
+                user = JSON.parse(user);
+            } else {
+                user = await usersRepository.findUser(condition);
+                delete user.password;
+            }
             if (!user) {
                 throw new HttpError.Unauthorized(MESSAGES.AUTH.COMMON.JWT.NO_USER);
             }
-            // 인증 통과 시 비밀번호 제외 후 유저 정보를 req.user에 담아 넘겨주기.
-            delete user.password;
             req.user = user;
             return next();
         } catch (err) {
