@@ -9,11 +9,11 @@ import { requireRoles } from '../middlewares/require-roles.middleware.js';
 import { validateAccessToken } from '../middlewares/require-access-token.middleware.js';
 import { UsersRepository } from '../repositories/users.repository.js';
 import { AUTH_CONS } from '../constants/auth.constant.js';
-import { createOrderValidator } from '../middlewares/validators/order/create-order.validator.middleware.js';
-import { getAllOrdersValidator } from '../middlewares/validators/order/get-all-orders.validator.middleware.js';
-import { getOrderByIdValidator } from '../middlewares/validators/order/get-order-by-id.validator.middleware.js';
-import { updateOrderStatusValidator } from '../middlewares/validators/order/update-order-status.validator.middleware.js';
-import { completeOrderValidator } from '../middlewares/validators/order/complete-order.validator.middleware.js';
+import { createOrderValidator } from '../middlewares/validators/orders/create-order.validator.middleware.js';
+import { getAllOrdersValidator } from '../middlewares/validators/orders/get-all-orders.validator.middleware.js';
+import { getOrderByIdValidator } from '../middlewares/validators/orders/get-order-by-id.validator.middleware.js';
+import { updateOrderStatusValidator } from '../middlewares/validators/orders/update-order-status.validator.middleware.js';
+import { completeOrderValidator } from '../middlewares/validators/orders/complete-order.validator.middleware.js';
 
 const usersRepository = new UsersRepository(prisma);
 const orderRepository = new OrdersRepository(prisma);

@@ -1,39 +1,40 @@
 import express from 'express';
-import {prisma} from "../utils/prisma/prisma.util.js";
+import { prisma } from '../utils/prisma/prisma.util.js';
 
 //토큰 발급
-import {validateAccessToken} from '../middlewares/require-access-token.middleware.js';
+import { validateAccessToken } from '../middlewares/require-access-token.middleware.js';
 
 //레이어 가져오기
 import { UsersRepository } from '../repositories/users.repository.js';
 import { OwnerService } from '../services/owner.service.js';
-import { OwnerController } from "../controllers/owner.controller.js";
+import { OwnerController } from '../controllers/owner.controller.js';
 import { RestaurantsRepository } from '../repositories/restaurants.repository.js';
+import { generateStoreValidator } from '../middlewares/validators/owner/generate-store.validator.middleware.js';
+import { updateStoreValidator } from '../middlewares/validators/owner/update-store.validator.middleware.js';
+import { restoreStoreValidator } from '../middlewares/validators/owner/restore-store.validator.middleware.js';
 
+const router = express.Router();
 
-const router=express.Router();
+const userRepository = new UsersRepository(prisma);
+const restaurantsRepository = new RestaurantsRepository(prisma);
 
-const userRepository=new UsersRepository(prisma);
-const restaurantsRepository=new RestaurantsRepository(prisma);
+const ownerService = new OwnerService(userRepository, restaurantsRepository);
 
-const ownerService=new OwnerService(userRepository,restaurantsRepository);
-
-const ownerController=new OwnerController(ownerService);
+const ownerController = new OwnerController(ownerService);
 
 //사장 업장 생성
-router.post('/store',validateAccessToken(userRepository),ownerController.generateStore);
+router.post('/store', validateAccessToken(userRepository), generateStoreValidator, ownerController.generateStore);
 
 //사장 업장 조회
-router.get('/store',validateAccessToken(userRepository),ownerController.checkStore);
+router.get('/store', validateAccessToken(userRepository), updateStoreValidator, ownerController.checkStore);
 
 //사장 업장 수정
-router.patch('/store',validateAccessToken(userRepository),ownerController.updateStore);
+router.patch('/store', validateAccessToken(userRepository), ownerController.updateStore);
 
 //사장 업장 삭제
-router.delete('/store',validateAccessToken(userRepository),ownerController.deleteStore);
+router.delete('/store', validateAccessToken(userRepository), ownerController.deleteStore);
 
-
-
-
+//사장 업장 복원
+router.patch('/restore', validateAccessToken(userRepository), restoreStoreValidator, ownerController.restoreStore);
 
 export default router;
