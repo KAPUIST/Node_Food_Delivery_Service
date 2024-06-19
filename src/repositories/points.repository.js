@@ -23,4 +23,14 @@ export class PointsRepository {
             data: { point: { decrement: point } },
         });
     };
+
+    increasePoint=async(condition,point) => {
+        console.log(2);
+        return await this.prisma.points.update({
+            where:condition,
+            data:{
+                point: { increment: point }
+            }
+        });
+    }
 }

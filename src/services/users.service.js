@@ -1,8 +1,9 @@
 import bcrypt from "bcrypt";
 
 export class UsersService {
-    constructor (UsersRepository) {
+    constructor (UsersRepository,PointsRepository) {
         this.UsersRepository=UsersRepository;
+        this.PointsRepository=PointsRepository;
     }
     findUser=async(condition)=>{
         const user=await this.UsersRepository.findUser(condition);
@@ -76,6 +77,17 @@ export class UsersService {
         //모든 검증이 끝난뒤 데이터 삭제
         const deletedUser=await this.UsersRepository.deleteUser(condition);
         return deletedUser;
+    }
+    //금액 충전
+    chargePoint=async(condition,chargeMoney)=> {
+        
+        const chargedMoney=
+        await this.PointsRepository.increasePoint(condition,chargeMoney);
+        
+        delete chargedMoney.id;
+        delete chargedMoney.userId;
+
+        return chargedMoney;
     }
 
 }

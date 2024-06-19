@@ -64,6 +64,24 @@ export class UsersController {
             next(err);
         }
     }
+    chargePoint=async(req,res,next)=>{
+        try {
+            const {chargeMoney}=req.body;
+            const condition={id:req.user.id};
+
+            
+            const account_point=await this.UsersService.chargePoint(condition,chargeMoney);
+
+            if (account_point.errorMessage) {
+                return res.status(account_point.status).json({errorMessage:account_point.errorMessage});
+            }
+
+            return res.status(200).json({account_point});
+        }
+        catch(err) {
+            next(err);
+        }
+    }
     
 
 
