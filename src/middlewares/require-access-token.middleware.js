@@ -36,14 +36,13 @@ export const validateAccessToken = (usersRepository) => {
             }
             // 유저 DB에 접근하는 usersRepository 클래스 메서드를 통해 쿼리하도록 리팩토링
             const condition = { id: decodedToken.id };
-            let user = await redisClient.get(`user:${condition.id}`);
+            let user = await redisClient.get(`session:${condition.id}`);
             if (user) {
                 user = JSON.parse(user);
             } else {
-                let user = await usersRepository.findUser(condition);
+                user = await usersRepository.findUser(condition);
                 delete user.password;
             }
-
             if (!user) {
                 throw new HttpError.Unauthorized(MESSAGES.AUTH.COMMON.JWT.NO_USER);
             }

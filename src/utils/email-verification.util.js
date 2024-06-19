@@ -12,8 +12,6 @@ class EmailVerificationUtil {
     static isCodeExpired(timestamp) {
         return Date.now() > timestamp + EmailVerificationUtil.expirationTime;
     }
-
-    static codes = {};
 }
 
 export { EmailVerificationUtil };
