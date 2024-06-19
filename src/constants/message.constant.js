@@ -257,6 +257,10 @@ export const MESSAGES = {
                 BASE: '가게 ID는 정수입니다.',
                 REQUIRED: '가게 ID를 입력해 주세요.',
             },
+            MENU_ID: {
+                BASE: '메뉴 ID는 정수입니다.',
+                REQUIRED: '메뉴 ID를 입력해 주세요.',
+            },
             NAME: {
                 BASE: '메뉴 이름은 문자열입니다.',
                 REQUIRED: '메뉴 이름을 입력해 주세요.',
@@ -264,6 +268,10 @@ export const MESSAGES = {
             PRICE: {
                 BASE: '가격은 정수입니다.',
                 REQUIRED: '가격을 입력해 주세요.',
+            },
+            SORT: {
+                REQUIRED: '정렬 순서를 입력해 주세요.',
+                INVALID_RATING: '유효하지 않은 정렬 순서입니다.',
             },
         },
     },

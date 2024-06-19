@@ -8,6 +8,10 @@ import { AUTH_CONS } from '../constants/auth.constant.js';
 import { MenusRepository } from '../repositories/menus.repository.js';
 import { MenusService } from '../services/menus.service.js';
 import { RestaurantsRepository } from '../repositories/restaurants.repository.js';
+import { createMenuValidator } from '../middlewares/validators/\bmenus/create-menu.validator.middleware.js';
+import { getManyMenuValidator } from '../middlewares/validators/\bmenus/get-many-menus.validator.middleware.js';
+import { updateMenuValidator } from '../middlewares/validators/\bmenus/update-menus.validator.middleware.js';
+import { deleteMenuValidator } from '../middlewares/validators/\bmenus/delete-menus.validator.middleware.js';
 
 const router = express.Router();
 
@@ -22,17 +26,19 @@ router.post(
     '/',
     validateAccessToken(usersRepository),
     requireRoles([AUTH_CONS.ROLE.OWNER]),
+    createMenuValidator,
     menusController.createMenu,
 );
 
 //메뉴 조회
-router.get('/:restaurantId', menusController.getManyMenus);
+router.get('/:restaurantId', getManyMenuValidator, menusController.getManyMenus);
 
 //메뉴 수정
 router.patch(
     '/restaurant/:menuId',
     validateAccessToken(usersRepository),
     requireRoles([AUTH_CONS.ROLE.OWNER]),
+    updateMenuValidator,
     menusController.updateMenu,
 );
 
@@ -41,6 +47,7 @@ router.delete(
     '/restaurant/:menuId',
     validateAccessToken(usersRepository),
     requireRoles([AUTH_CONS.ROLE.OWNER]),
+    deleteMenuValidator,
     menusController.deleteMenu,
 );
 

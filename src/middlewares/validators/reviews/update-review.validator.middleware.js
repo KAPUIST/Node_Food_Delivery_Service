@@ -21,7 +21,7 @@ export const updateReviewValidator = async (req, res, next) => {
                     'number.integer': MESSAGES.REVIEW.RATING.BASE,
                     'any.only': MESSAGES.REVIEW.RATING.INVALID_RATING,
                 }),
-            comment: Joi.string().required().messages({
+            comment: Joi.string().messages({
                 'string.base': MESSAGES.REVIEW.COMMON.COMMENT.BASE,
             }),
         });
