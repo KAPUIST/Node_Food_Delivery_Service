@@ -12,7 +12,7 @@ const router = express.Router();
 
 router.use('/auth', authRouter);
 router.use('/users', usersRouter);
-router.use('/restaurants/:restaurantId/menus', menusRouter);
+router.use('/menus', menusRouter);
 router.use('/search', searchRouter);
 router.use('/owner', ownerRouter);
 router.use('/orders', ordersRouter);

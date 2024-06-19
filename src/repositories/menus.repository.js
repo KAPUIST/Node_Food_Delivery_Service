@@ -1,25 +1,29 @@
-import { prisma } from '../utils/prisma/prisma.util.js';
-
 export class MenusRepository {
+    constructor(prisma) {
+        this.prisma = prisma;
+    }
+
     createMenu = async ({ restaurantId, name, price }) => {
-        const data = await prisma.menus.create({
+        const data = await this.prisma.menus.create({
             data: {
-                restaurantId, name, price
-            }
+                restaurantId,
+                name,
+                price,
+            },
         });
 
         return data;
     };
 
     getManyMenus = async ({ restaurantId, sort }) => {
-        const data = await prisma.menus.findMany({
+        const data = await this.prisma.menus.findMany({
             where: { restaurantId },
             orderBy: {
                 createdAt: sort,
             },
         });
 
-        return data.map(menus => ({
+        return data.map((menus) => ({
             id: menus.id,
             restaurantId: menus.restaurantId,
             name: menus.name,
@@ -30,43 +34,39 @@ export class MenusRepository {
     };
 
     getMenu = async ({ menuId, restaurantId }) => {
-        return await prisma.menus.findUnique({
+        return await this.prisma.menus.findUnique({
             where: {
-
-                    id: menuId,
-                    restaurantId: restaurantId
-
-            }
+                id: menuId,
+                restaurantId: restaurantId,
+            },
         });
     };
 
     getRestaurantById = async (restaurantId) => {
-        return await prisma.restaurants.findUnique({
-            where: { id: restaurantId }
+        return await this.prisma.restaurants.findUnique({
+            where: { id: restaurantId },
         });
     };
 
-    updateMenu = async ({ id, restaurantId, name, price }) => {
-        const data = await prisma.menus.update({
+    updateMenu = async ({ menuId, name, price }) => {
+        const data = await this.prisma.menus.update({
             where: {
-                    id: +id,
-                    restaurantId: restaurantId,
+                id: menuId,
             },
             data: {
                 name,
-                price
-            }
+                price,
+            },
         });
 
         return data;
     };
 
-    deleteMenu = async ({ id, restaurantId }) => {
-        const data = await prisma.menus.delete({
+    deleteMenu = async ({ menuId }) => {
+        const data = await this.prisma.menus.delete({
             where: {
-                    id: +id,
-                    restaurantId: restaurantId,
-            }
+                id: +menuId,
+            },
         });
 
         return { id: data.id };

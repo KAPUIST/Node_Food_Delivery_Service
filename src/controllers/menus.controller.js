@@ -3,20 +3,16 @@ import { HTTP_STATUS } from '../constants/http-status.constant.js';
 import { MESSAGES } from '../constants/message.constant.js';
 
 export class MenusController {
-   
-    menusService = new MenusService();
+    constructor(menusService) {
+        this.menusService = menusService;
+    }
 
     createMenu = async (req, res, next) => {
         try {
             const ownerId = req.user.id; // 인증된 사장님의 ID
-            const { restaurantId } = req.params;
+
             const { name, price } = req.body;
-            const createdMenu = await this.menusService.createMenu(
-                restaurantId,
-                name,
-                price,
-                ownerId,
-            );
+            const createdMenu = await this.menusService.createMenu(name, price, ownerId);
 
             return res.status(HTTP_STATUS.CREATED).json({ data: createdMenu, message: MESSAGES.MENU.CREATED.SUCCEED });
         } catch (error) {
@@ -32,8 +28,9 @@ export class MenusController {
             if (sort !== 'desc' && sort !== 'asc') {
                 sort = 'desc';
             }
+            console.log(sort);
 
-            const { restaurantId } = req.params;
+            const restaurantId = +req.params.restaurantId;
             const data = await this.menusService.getManyMenus({ restaurantId, sort });
             return res.status(HTTP_STATUS.OK).json({ data });
         } catch (error) {
@@ -47,7 +44,7 @@ export class MenusController {
             const { id } = req.body;
 
             const data = await this.menusService.getMenu({ id, restaurantId });
-            
+
             return res.status(HTTP_STATUS.OK).json({ data });
         } catch (error) {
             next(error);
@@ -57,12 +54,11 @@ export class MenusController {
     updateMenu = async (req, res, next) => {
         try {
             const ownerId = req.user.id; // 인증된 사장님의 ID
-            const { restaurantId, id } = req.params;
+            const menuId = +req.params.menuId;
             const { name, price } = req.body;
 
             const data = await this.menusService.updateMenu({
-                id,
-                restaurantId,
+                menuId,
                 name,
                 price,
                 ownerId,
@@ -77,9 +73,9 @@ export class MenusController {
     deleteMenu = async (req, res, next) => {
         try {
             const ownerId = req.user.id; // 인증된 사장님의 ID
-            const { restaurantId, id } = req.params;
+            const menuId = +req.params.menuId;
 
-            const data = await this.menusService.deleteMenu({ id, restaurantId, ownerId });
+            const data = await this.menusService.deleteMenu({ menuId, ownerId });
 
             return res.status(HTTP_STATUS.OK).json({ data, message: MESSAGES.MENU.DELETE.SUCCEED });
         } catch (error) {
