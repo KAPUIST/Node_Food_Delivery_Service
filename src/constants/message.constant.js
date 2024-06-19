@@ -210,12 +210,34 @@ export const MESSAGES = {
             REQUIRED: '리뷰를 입력해 주세요.',
             NOT_FOUND: '리뷰가 존재하지 않습니다.',
             NOT_DELIVERED: '배달이 완료되지 않아 리뷰를 작성할수없습니다.',
+
+            ORDER_ID: {
+                BASE: '주문 ID는 정수입니다.',
+                REQUIRED: '주문 ID를 입력해 주세요.',
+            },
+            COMMENT: {
+                BASE: '리뷰 내용은 문자열입니다.',
+                REQUIRED: '리뷰 내용을 입력해 주세요.',
+            },
+            RESTAURANT_ID: {
+                BASE: '가게 ID는 정수입니다.',
+                REQUIRED: '가게 ID를 입력해 주세요.',
+            },
+            ORDER_BY: {
+                REQUIRED: '정렬 순서를 입력해 주세요.',
+                INVALID_RATING: '유효하지 않은 정렬 순서입니다.',
+            },
+            REVIEW_ID: {
+                BASE: '리뷰 ID는 정수입니다.',
+                REQUIRED: '리뷰 ID를 입력해 주세요.',
+            },
         },
 
         RATING: {
             MAX: '평점은 최대 5점까지 입니다.',
             BASE: '평점은 숫자만 입력해주세요.',
             REQUIRED: '평점을 입력해 주세요.',
+            INVALID_RATING: '유효하지 않은 평점입니다.',
         },
         CREATE: {
             CONFLICT: '이미 같은 주문에 리뷰를 등록 하셨습니다.',
@@ -226,6 +248,22 @@ export const MESSAGES = {
         },
         DELETE: {
             SUCCEED: '리뷰가 삭제되었습니다.',
+        },
+    },
+    MENUS: {
+        COMMON: {
+            RESTAURANT_ID: {
+                BASE: '가게 ID는 정수입니다.',
+                REQUIRED: '가게 ID를 입력해 주세요.',
+            },
+            NAME: {
+                BASE: '메뉴 이름은 문자열입니다.',
+                REQUIRED: '메뉴 이름을 입력해 주세요.',
+            },
+            PRICE: {
+                BASE: '가격은 정수입니다.',
+                REQUIRED: '가격을 입력해 주세요.',
+            },
         },
     },
 };
