@@ -18,6 +18,11 @@ export default class OrdersRepository {
             },
         });
     };
+    isOrderExists = async (customerId, orderId) => {
+        return await this.prisma.orders.findUnique({
+            where: { id: orderId, customerId: customerId },
+        });
+    };
     findOrdersByStatus = async (status, restaurantId) => {
         return await this.prisma.orders.findMany({
             where: { status, restaurantId },

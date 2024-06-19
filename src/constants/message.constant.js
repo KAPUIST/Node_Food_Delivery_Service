@@ -100,16 +100,15 @@ export const MESSAGES = {
             NOT_FOUND: '메뉴가 존재하지 않습니다.',
             MENU_NOT_FOUND_IN_RESTAURANT: '레스토랑 에서 메뉴를 가지고있지 않습니다.',
         },
-        CREATED:{
-            SUCCEED: '메뉴가 생성되었습니다'
+        CREATED: {
+            SUCCEED: '메뉴가 생성되었습니다',
         },
-        UPDATE:{
-            SUCCEED: '메뉴가 수정되었습니다'
+        UPDATE: {
+            SUCCEED: '메뉴가 수정되었습니다',
         },
         DELETE: {
-            SUCCEED: '메뉴가 삭제되었습니다' 
-        }
-        
+            SUCCEED: '메뉴가 삭제되었습니다',
+        },
     },
     POINTS: {
         COMMON: {
@@ -158,6 +157,7 @@ export const MESSAGES = {
         COMMON: {
             REQUIRED: '리뷰를 입력해 주세요.',
             NOT_FOUND: '리뷰가 존재하지 않습니다.',
+            NOT_DELIVERED: '배달이 완료되지 않아 리뷰를 작성할수없습니다.',
         },
 
         RATING: {
@@ -166,13 +166,14 @@ export const MESSAGES = {
             REQUIRED: '평점을 입력해 주세요.',
         },
         CREATE: {
+            CONFLICT: '이미 같은 주문에 리뷰를 등록 하셨습니다.',
             SUCCEED: '리뷰가 등록되었습니다,',
         },
-        UPDATE:{
+        UPDATE: {
             SUCCEED: '리뷰가 수정되었습니다,',
         },
-        DELETE:{
+        DELETE: {
             SUCCEED: '리뷰가 삭제되었습니다.',
         },
-}
-}
+    },
+};

@@ -10,4 +10,8 @@ export const ENV_CONS = {
     MAIL_AUTH_USER: process.env.MAIL_AUTH_USER,
     MAIL_AUTH_PASS: process.env.MAIL_AUTH_PASS,
     REDIS_URL: process.env.REDIS_URL,
+    AWS_ACCESS_KEY_ID: process.env.AWS_ACCESS_KEY_ID,
+    AWS_SECRET_ACCESS_KEY: process.env.AWS_SECRET_ACCESS_KEY,
+    AWS_REGION: process.env.AWS_REGION,
+    BUCKET_NAME: process.env.BUCKET_NAME,
 };
