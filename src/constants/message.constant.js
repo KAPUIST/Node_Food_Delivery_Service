@@ -209,6 +209,7 @@ export const MESSAGES = {
         COMMON: {
             REQUIRED: '리뷰를 입력해 주세요.',
             NOT_FOUND: '리뷰가 존재하지 않습니다.',
+            NOT_DELIVERED: '배달이 완료되지 않아 리뷰를 작성할수없습니다.',
         },
 
         RATING: {
@@ -217,6 +218,7 @@ export const MESSAGES = {
             REQUIRED: '평점을 입력해 주세요.',
         },
         CREATE: {
+            CONFLICT: '이미 같은 주문에 리뷰를 등록 하셨습니다.',
             SUCCEED: '리뷰가 등록되었습니다,',
         },
         UPDATE: {

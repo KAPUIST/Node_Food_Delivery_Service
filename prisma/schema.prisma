@@ -121,6 +121,7 @@ model Orders {
 
   customer   Users        @relation(fields: [customerId], references: [id])
   restaurant Restaurants  @relation(fields: [restaurantId], references: [id])
+  reviews    Reviews[]
   orderItems OrderItems[]
 
   @@index([customerId], name: "idx_orders_customer_id")
@@ -143,6 +144,7 @@ model OrderItems {
 
 model Reviews {
   id           Int      @id @default(autoincrement())
+  orderId      Int      @map("order_id")
   customerId   Int      @map("customer_id")
   restaurantId Int      @map("restaurant_id")
   rating       Int      @default(5)
@@ -151,9 +153,11 @@ model Reviews {
   updatedAt    DateTime @updatedAt @map("updated_at")
 
   customer   Users       @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  order      Orders      @relation(fields: [orderId], references: [id], onDelete: Cascade)
   restaurant Restaurants @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
   images     Images[]
-
+  
+  @@index([orderId], name: "idx_reviews_order_id")
   @@index([customerId], name: "idx_reviews_customer_id")
   @@index([restaurantId], name: "idx_reviews_restaurant_id")
 }
@@ -162,11 +166,11 @@ model Images {
   id        Int      @id @default(autoincrement())
   menuId    Int?     @map("menu_id")
   reviewId  Int?     @map("review_id")
-  url       String
+  url       String   @db.Text
   createdAt DateTime @default(now()) @map("created_at")
 
-  menu   Menus?   @relation(fields: [menuId], references: [id])
-  review Reviews? @relation(fields: [reviewId], references: [id])
+  menu   Menus?   @relation(fields: [menuId], references: [id],onDelete: Cascade)
+  review Reviews? @relation(fields: [reviewId], references: [id],onDelete: Cascade)
 
   @@index([menuId], name: "idx_images_menu_id")
   @@index([reviewId], name: "idx_images_review_id")

@@ -13,6 +13,11 @@ export default class OrdersService {
         return order;
     };
 
+    // isOrderExists = async (customerId, orderId) => {
+    //     const order = await this.orderRepository.isOrderExists(customerId, orderId);
+    //     return order;
+    // };
+
     getAllOrders = async (status, restaurantId) => {
         if (status) {
             return await this.orderRepository.findOrdersByStatus(status, restaurantId);
