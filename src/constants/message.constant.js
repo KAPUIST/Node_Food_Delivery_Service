@@ -152,6 +152,7 @@ export const MESSAGES = {
     },
     RESTAURANTS: {
         NOT_ALLOW: '권한이 존재하지않습니다.',
+        NOT_FOUND: '레스토랑이 없습니다.',
     },
     USER: {
         COMMON: {
