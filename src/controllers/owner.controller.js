@@ -24,7 +24,9 @@ export class OwnerController {
     };
     //내 업장 조회하기
     checkStore = async (req, res, next) => {
+
         const condition={ownerId:req.user.id};
+
         const store=await this.OwnerService.checkStore(condition);
         return res.status(200).json({ store });
     };
@@ -52,6 +54,26 @@ export class OwnerController {
         const condition={ownerId:req.user.id};
         const deletedStore=await this.OwnerService.deleteStore(condition);
 
+        if (deletedStore.errorMessage) {
+            return  res.status(deletedStore.status).json({ Message: deletedStore.errorMessage });
+        }
+
         return res.status(200).json({ Message: '성공적으로 폐업 완료' });
     };
+    restoreStore=async(req,res,next)=>{
+        const user=req.user;
+        const {number}=req.body;
+        const condition={ownerId:req.user.id};
+
+        //인덱스 값으로 전환하여 number는 -1로 서비스 계층에 넘긴다.
+        const restoreStore=await this.OwnerService.restoreStore(condition,number-1);
+        
+        //에러타일
+        if (restoreStore.errorMessage) {
+            return  res.status(restoreStore.status).json({ Message: restoreStore.errorMessage });
+        }
+
+
+        return res.status(201).json({restoreStore});
+    }
 }
