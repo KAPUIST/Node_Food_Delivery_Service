@@ -29,7 +29,6 @@ export class AuthService {
         const existUserByEmail = await this.usersRepository.findUser({ email });
         const existUserByName = await this.usersRepository.findUser({ name });
 
-
         if (existUserByEmail) {
             throw new HttpError.Conflict(MESSAGES.AUTH.COMMON.EMAIL.DUPLICATED_EMAIL);
         }
@@ -75,8 +74,6 @@ export class AuthService {
         });
 
         const verificationCode = EmailVerificationUtil.codeIssue();
-
-        const timestamp = Date.now();
 
         await redisClient.setEx(`verificationEmail:${email}`, 300, JSON.stringify({ code: verificationCode }));
         //await redisClient.setEx(`session:${user.id}`, 43200, JSON.stringify(sessionData));
