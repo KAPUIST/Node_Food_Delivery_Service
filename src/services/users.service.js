@@ -1,8 +1,9 @@
 import bcrypt from "bcrypt";
 
 export class UsersService {
-    constructor (UsersRepository) {
+    constructor (UsersRepository,PointsRepository) {
         this.UsersRepository=UsersRepository;
+        this.PointsRepository=PointsRepository;
     }
     findUser=async(condition)=>{
         const user=await this.UsersRepository.findUser(condition);
@@ -21,6 +22,13 @@ export class UsersService {
             const error={status:400,errorMessage:"존재하지 않는 계정입니다."};
             return error;
         }
+        //정보 삭제
+        delete user.password;
+        delete user.id;
+        delete user.role;
+        delete user.phoneNumber;
+        delete user.updatedAt;
+
         return user;
     }
 
@@ -76,6 +84,17 @@ export class UsersService {
         //모든 검증이 끝난뒤 데이터 삭제
         const deletedUser=await this.UsersRepository.deleteUser(condition);
         return deletedUser;
+    }
+    //금액 충전
+    chargePoint=async(condition,chargeMoney)=> {
+        
+        const chargedMoney=
+        await this.PointsRepository.increasePoint(condition,chargeMoney);
+        
+        delete chargedMoney.id;
+        delete chargedMoney.userId;
+
+        return chargedMoney;
     }
 
 }

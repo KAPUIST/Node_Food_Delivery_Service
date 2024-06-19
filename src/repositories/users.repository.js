@@ -35,10 +35,5 @@ export class UsersRepository {
             where:condition
         })
         return user;
-    };
-
-    chargePoint=async(condition)=>{
-
-    }
-    
+    };  
 }

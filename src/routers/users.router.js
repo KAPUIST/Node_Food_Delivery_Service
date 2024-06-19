@@ -1,18 +1,22 @@
 import express from 'express';
-import { prisma } from '../utils/prisma/prisma.util.js';
-import bcrypt from 'bcrypt';
-import { UsersController } from '../controllers/users.controller.js';
-import { UsersService } from '../services/users.service.js';
-import { UsersRepository } from '../repositories/users.repository.js';
-import { RestaurantsRepository } from '../repositories/restaurants.repository.js';
-import { validateAccessToken } from '../middlewares/require-access-token.middleware.js';
-import { getOrderByIdValidator } from '../middlewares/validators/orders/get-order-by-id.validator.middleware.js';
-import { deleteAccountValidator } from '../middlewares/validators/users/delete-account.validator.middleware.js';
 
-const userRepository = new UsersRepository(prisma);
-const restaurantRepository = new RestaurantsRepository(prisma);
-const usersService = new UsersService(userRepository);
-const usersController = new UsersController(usersService);
+import {prisma} from "../utils/prisma/prisma.util.js";
+import bcrypt from "bcrypt";
+import {UsersController } from '../controllers/users.controller.js';
+import {UsersService} from '../services/users.service.js'
+
+import {UsersRepository } from '../repositories/users.repository.js';
+import {RestaurantsRepository} from '../repositories/restaurants.repository.js';
+import {PointsRepository} from '../repositories/points.repository.js';
+
+import {validateAccessToken} from '../middlewares/require-access-token.middleware.js';
+
+const userRepository=new UsersRepository(prisma);
+const pointsRepository=new PointsRepository(prisma);
+
+const usersService= new UsersService(userRepository,pointsRepository);
+const usersController=new UsersController(usersService);
+
 
 const router = express.Router();
 
@@ -26,6 +30,6 @@ router.patch('/my-info', validateAccessToken(userRepository), getOrderByIdValida
 router.delete('/account', validateAccessToken(userRepository), deleteAccountValidator, usersController.deleteAccount);
 
 //본인 포인트 충전
-router.patch('/charge-point');
+router.patch('/charge-point',validateAccessToken(userRepository),usersController.chargePoint);
 
 export default router;
