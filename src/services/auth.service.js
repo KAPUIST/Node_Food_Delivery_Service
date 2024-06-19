@@ -16,8 +16,8 @@ export class AuthService {
     // 회원가입 - role이 CUSTOMER이면 100만 포인트 지급, OWNER면 작성한 point 만큼 지급
     signUpUser = async ({ email, password, role, city, address, name, phoneNumber, point, verificationCode }) => {
         // 이메일 인증 제외하고 가입하고 싶으시면 19~25 주석처리 하시면 됩니다.
-        let dbcode = await redisClient.get(`verificationEmail:${email}`);
-        const latestVerification = JSON.parse(dbcode);
+        let emailCode = await redisClient.get(`verificationEmail:${email}`);
+        const latestVerification = JSON.parse(emailCode);
         //const latestVerification = EmailVerificationUtil.codes[email];
         if (!latestVerification || latestVerification.code !== +verificationCode) {
             throw new HttpError.Unauthorized(MESSAGES.AUTH.SIGN_UP.VERIFICATION_CODE.INCONSISTENT);
