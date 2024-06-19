@@ -6,7 +6,7 @@ import { ENV_CONS } from '../constants/env.constant.js';
 import { AUTH_CONS } from '../constants/auth.constant.js';
 import { EmailVerificationUtil } from '../utils/email-verification.util.js';
 import { generateToken } from '../utils/generate-token.util.js';
-
+import { redisClient } from '../utils/redis/redis.util.js';
 export class AuthService {
     constructor(usersRepository, pointsRepository, refreshTokenRepository) {
         this.usersRepository = usersRepository;
@@ -92,6 +92,7 @@ export class AuthService {
     // 로그인
     signInUser = async (email, password) => {
         const condition = { email };
+        //레디스 cache hti 하면 레디스에서 가져오기 없다면 넣어주기.
         const user = await this.usersRepository.findUser(condition);
         const isValidUser = user && (await bcrypt.compare(password, user.password));
         //이메일로 조회되지 않거나 비밀번호가 일치하지 앟는 경우
@@ -99,6 +100,9 @@ export class AuthService {
             throw new HttpError.Unauthorized(MESSAGES.AUTH.COMMON.UNAUTHORIZED);
         }
         const payload = { id: user.id };
+        const sessionData = { id: user.id, email: user.email, role: user.role };
+        // 세션 데이터를 Redis에 저장,  1시간 (3600초)
+        await redisClient.setEx(`session:${user.id}`, 43200, JSON.stringify(sessionData));
         const tokens = await generateToken(this.refreshTokenRepository, payload);
         return tokens;
     };

@@ -1,6 +1,6 @@
 import Joi from 'joi';
 import { MESSAGES } from '../../../constants/message.constant.js';
-import { ORDER_VALIDATOR } from '../../../constants/orders.constant.js';
+//import { ORDER_VALIDATOR } from '../../../constants/orders.constant.js';
 
 export const createOrderValidator = async (req, res, next) => {
     try {
