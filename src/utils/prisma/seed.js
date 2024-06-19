@@ -189,6 +189,7 @@ async function main() {
             data: {
                 customerId: order.customerId,
                 restaurantId: order.restaurantId,
+                orderId: order.id,
                 rating,
                 comment,
             },
