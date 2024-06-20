@@ -179,8 +179,20 @@ export const MESSAGES = {
                 BASE: '포인트는 정수형입니다.',
                 REQUIRED: '포인트를 입력해 주세요.',
             },
+            GET_USER: {
+                NOT_EXISTED: '존재하지 않는 계정입니다.',
+            },
             EDIT_USER: {
                 SUCCESS: '성공적으로 정보가 수정되었습니다!',
+                NOT_EXISTED: '존재하지 않는 계정입니다.',
+                NOT_DATA: '변경할 정보가 없습니다!',
+                PASSWORD: '비밀번호를 입력해주세요!',
+                NOT_MATCHED_PASSWORD: '비밀번호가 일치하지 않습니다.',
+            },
+            DELETE_USER: {
+                NOT_EXISTED: '존재하지 않는 계정입니다.',
+                PASSWORD: '비밀번호를 입력해주세요!',
+                NOT_MATCHED_PASSWORD: '비밀번호가 일치하지 않습니다.',
             },
         },
     },
@@ -213,8 +225,18 @@ export const MESSAGES = {
                 EXISTED: `이미 업장을 소유하고 있습니다! 업장 폐쇄 후 다시 등록해주시기 바랍니다.`,
                 UN_WRITE: '업장 정보를 작성해주세요!',
             },
+            CHECK_STORE: {
+                NOT_EXISTED: '업장이 존재하지 않습니다!',
+            },
+            UPDATE_STORE: {
+                NOT_EXISTED: '업장이 존재하지 않습니다!',
+            },
             DELETE_STORE: {
                 SUCCESS: '성공적으로 식당이 삭제 되었습니다!',
+                NOT_EXISTED: '업장이 존재하지 않습니다!',
+            },
+            RESTORE_STORE: {
+                EXISTED: `이미 업장이 존재합니다!`,
             },
         },
     },

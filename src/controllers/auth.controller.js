@@ -21,7 +21,6 @@ export class AuthController {
         try {
             const { email } = req.body;
             const code = await this.authService.verifyEmail(email);
-
             return res
                 .status(HTTP_STATUS.OK)
                 .json({ status: HTTP_STATUS.OK, message: MESSAGES.AUTH.MAIL.SUCCEED, data: code });
@@ -34,7 +33,6 @@ export class AuthController {
         try {
             const { email, password } = req.body;
             const tokens = await this.authService.signInUser(email, password);
-
             return res
                 .status(HTTP_STATUS.OK)
                 .json({ status: HTTP_STATUS.OK, message: MESSAGES.AUTH.SIGN_IN.SUCCEED, data: tokens });

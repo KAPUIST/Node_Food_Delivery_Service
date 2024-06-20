@@ -6,8 +6,6 @@ import { UsersRepository } from '../repositories/users.repository.js';
 import { PointsRepository } from '../repositories/points.repository.js';
 import { RefreshTokenRepository } from '../repositories/refresh-token.repository.js';
 import { validateRefreshToken } from '../middlewares/require-refresh-token.middleware.js';
-import { requireRoles } from '../middlewares/require-roles.middleware.js';
-import { validateAccessToken } from '../middlewares/require-access-token.middleware.js';
 import { signUpValidator } from '../middlewares/validators/auth/sign-up.validator.middleware.js';
 import { signInValidator } from '../middlewares/validators/auth/sign-in.validator.middleware.js';
 

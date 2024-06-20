@@ -10,7 +10,6 @@ import { AUTH_CONS } from '../constants/auth.constant.js';
 import { UsersRepository } from '../repositories/users.repository.js';
 import ImageRepository from '../repositories/image.repository.js';
 import { upload } from '../utils/aws/s3-uploader.js';
-import { createReviewValidator } from '../middlewares/validators/reviews/create-review.validator.middleware.js';
 import { getReviewValidator } from '../middlewares/validators/reviews/get-review.validator.middleware.js';
 import { updateReviewValidator } from '../middlewares/validators/reviews/update-review.validator.middleware.js';
 import { deleteReviewValidator } from '../middlewares/validators/reviews/delete-review.validator.middleware.js';
@@ -27,7 +26,6 @@ router.post(
     '/:orderId/order',
     validateAccessToken(usersRepository),
     requireRoles([AUTH_CONS.ROLE.CUSTOMER]),
-    // createReviewValidator,
     upload.single('images'),
     (req, res, next) => {
         reviewsController.createReview(req, res, next);

@@ -36,12 +36,9 @@ export class OwnerService {
 
         //업장이 존재하지 않는 경우
         if (!store) {
-            const error = { status: 404, errorMessage: '업장이 존재하지 않습니다!' };
-            return error;
+            throw new HttpError.NotFound(MESSAGES.OWNER.COMMON.CHECK_STORE.NOT_EXISTED);
         }
-
         //출력되는 정보 삭제
-
         delete store.id;
         delete store.ownerId;
         delete store.flag;
@@ -56,8 +53,7 @@ export class OwnerService {
         const currentStore = await this.findStore(condition);
 
         if (!currentStore) {
-            const error = { status: 404, errorMessage: '해당 업장이 존재하지 않습니다!' };
-            return error;
+            throw new HttpError.NotFound(MESSAGES.OWNER.COMMON.UPDATE_STORE.NOT_EXISTED);
         }
 
         //condition값에 id값도 추가
@@ -82,12 +78,9 @@ export class OwnerService {
 
         //업장이 존재하지 않는 경우에 대한 케이스
         if (!store) {
-            const error = { status: 404, errorMessage: '업장이 존재하지 않습니다!' };
-            return error;
+            throw new HttpError.NotFound(MESSAGES.OWNER.COMMON.DELETE_STORE.NOT_EXISTED);
         }
-
         condition.id = store.id;
-
         //업장이 혹여 여러 존재할 경우 제일 첫번째의 하나를 제거
         condition.id = store.id;
         const deletedStore = await this.RestaurantRepository.deleteStore(condition);
@@ -99,8 +92,7 @@ export class OwnerService {
     restoreStore = async (condition, number) => {
         //에러타일
         if (await this.findStore(condition)) {
-            const error = { status: 403, errorMessage: '이미 업장이 존재합니다' };
-            return error;
+            throw new HttpError.Unauthorized(MESSAGES.OWNER.COMMON.RESTORE_STORE.EXISTED);
         }
 
         const not_ExistsStore = await this.RestaurantRepository.all_FindNoneExistStore(condition);
