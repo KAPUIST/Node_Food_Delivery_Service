@@ -4,7 +4,7 @@ export class RestaurantsRepository {
     }
 
     findStore = async (condition) => {
-        condition.flag="EXISTS";
+        condition.flag = 'EXISTS';
         const restaurant = await this.prisma.Restaurants.findFirst({
             where: condition,
         });
@@ -12,8 +12,8 @@ export class RestaurantsRepository {
         return restaurant;
     };
 
-    all_FindNoneExistStore= async (condition) => {
-        condition.flag="NOT_EXISTS";
+    all_FindNoneExistStore = async (condition) => {
+        condition.flag = 'NOT_EXISTS';
         const restaurant = await this.prisma.Restaurants.findMany({
             where: condition,
         });
@@ -21,16 +21,15 @@ export class RestaurantsRepository {
         return restaurant;
     };
 
-    restoreStore=async(condition)=> {
-        const restoreStore=await this.prisma.Restaurants.update({
-            where: condition,data:{
-                flag:"EXISTS"
-            }
+    restoreStore = async (condition) => {
+        const restoreStore = await this.prisma.Restaurants.update({
+            where: condition,
+            data: {
+                flag: 'EXISTS',
+            },
         });
         return restoreStore;
-    }
-
-
+    };
 
     makeStore = async (storeData) => {
         const restaurant = await this.prisma.Restaurants.create({
@@ -52,7 +51,8 @@ export class RestaurantsRepository {
 
     deleteStore = async (condition) => {
         const deletedStore = await this.prisma.Restaurants.update({
-            where: condition,data:{flag:"NOT_EXISTS"}
+            where: condition,
+            data: { flag: 'NOT_EXISTS' },
         });
         return deletedStore;
     };

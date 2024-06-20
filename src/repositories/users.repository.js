@@ -19,21 +19,20 @@ export class UsersRepository {
         return createdUser;
     };
 
-
     //유저 테이블 정보 변경
-    modifyUser=async(condition,changeData) => {
-        const user= await this.prisma.users.update({
+    modifyUser = async (condition, changeData) => {
+        const user = await this.prisma.users.update({
             where: condition,
-            data: changeData
-        })
+            data: changeData,
+        });
         return user;
     };
 
     //유저 삭제
-    deleteUser=async(condition)=> {
-        const user=await this.prisma.users.delete({
-            where:condition
-        })
+    deleteUser = async (condition) => {
+        const user = await this.prisma.users.delete({
+            where: condition,
+        });
         return user;
-    };  
+    };
 }
