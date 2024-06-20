@@ -1,4 +1,3 @@
-import { MenusRepository } from '../repositories/menus.repository.js';
 import { HttpError } from '../errors/http.error.js';
 import { MESSAGES } from '../constants/message.constant.js';
 
@@ -30,7 +29,7 @@ export class MenusService {
     };
 
     getMenu = async ({ id, restaurantId }) => {
-        const data = await this.menusRepository.getManyMenus({ id, restaurantId });
+        const data = await this.menusRepository.getMenu({ id, restaurantId });
 
         if (!data) {
             throw new HttpError.NotFound(MESSAGES.MENU.COMMON.NOT_FOUND);
