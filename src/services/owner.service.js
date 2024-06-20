@@ -25,8 +25,6 @@ export class OwnerService {
         if (!storeData.name) {
             throw new HttpError.Unauthorized(MESSAGES.OWNER.COMMON.CREATE_STORE.UN_WRITE);
         }
-        //기본적으로 받는 금액 1000000원
-        storeData.totalRevenue = 1000000;
 
         const createdStore = await this.RestaurantRepository.makeStore(storeData);
         return createdStore;
@@ -42,11 +40,12 @@ export class OwnerService {
             return error;
         }
 
-        //정보 삭제
+        //출력되는 정보 삭제
 
         delete store.id;
         delete store.ownerId;
         delete store.flag;
+        delete store.totalRevenue;
 
         return store;
     };
