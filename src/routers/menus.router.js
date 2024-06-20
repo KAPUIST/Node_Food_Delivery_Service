@@ -8,10 +8,10 @@ import { AUTH_CONS } from '../constants/auth.constant.js';
 import { MenusRepository } from '../repositories/menus.repository.js';
 import { MenusService } from '../services/menus.service.js';
 import { RestaurantsRepository } from '../repositories/restaurants.repository.js';
-import { createMenuValidator } from '../middlewares/validators/\bmenus/create-menu.validator.middleware.js';
-import { getManyMenuValidator } from '../middlewares/validators/\bmenus/get-many-menus.validator.middleware.js';
-import { updateMenuValidator } from '../middlewares/validators/\bmenus/update-menus.validator.middleware.js';
-import { deleteMenuValidator } from '../middlewares/validators/\bmenus/delete-menus.validator.middleware.js';
+import { createMenuValidator } from '../middlewares/validators/menus/create-menu.validator.middleware.js';
+import { getManyMenuValidator } from '../middlewares/validators/menus/get-many-menus.validator.middleware.js';
+import { updateMenuValidator } from '../middlewares/validators/menus/update-menus.validator.middleware.js';
+import { deleteMenuValidator } from '../middlewares/validators/menus/delete-menus.validator.middleware.js';
 
 const router = express.Router();
 
