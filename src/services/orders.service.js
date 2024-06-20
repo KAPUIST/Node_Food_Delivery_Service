@@ -65,10 +65,11 @@ export default class OrdersService {
         let totalPrice = 0;
 
         for (const item of orderItems) {
-            const menu = await this.menusRepository.getMenu(item.menuId);
+            const menu = await this.menusRepository.getMenu({ menuId: item.menuId, restaurantId });
             if (!menu) {
                 throw new HttpError.BadRequest(MESSAGES.MENU.COMMON.NOT_FOUND);
             }
+            console.log(item, restaurantId);
 
             // 메뉴가 요청된 restaurantId에 속해 있는지 확인
             if (menu.restaurantId !== restaurantId) {
@@ -79,7 +80,7 @@ export default class OrdersService {
             // 총 가격 계산
             totalPrice += menu.price * item.quantity;
         }
-
+        console.log();
         return { totalPrice, orderItemsWithPrice: orderItems };
     };
     #checkUserPoint = async (userId, totalPrice) => {
