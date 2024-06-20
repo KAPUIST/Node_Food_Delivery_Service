@@ -44,11 +44,11 @@ model Users {
   phoneNumber String   @map("phone_number")
   createdAt   DateTime @default(now()) @map("created_at")
   updatedAt   DateTime @updatedAt @map("updated_at")
-
+  
   point        Points?
   token        Tokens?
   reviews      Reviews[]
-  notification Notifications[]
+
   orders       Orders[]
   restaurant   Restaurants[]
 
@@ -60,7 +60,6 @@ model Points {
   userId    Int      @unique @map("user_id")
   point     Int      @default(1000000) //사장님일경우 0
   updatedAt DateTime @updatedAt @map("updated_at")
-
   user Users @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
@@ -70,7 +69,6 @@ model Tokens {
   token     String?
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
-
   user Users @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
@@ -176,14 +174,4 @@ model Images {
   @@index([reviewId], name: "idx_images_review_id")
 }
 
-model Notifications {
-  id        Int      @id @default(autoincrement())
-  userId    Int      @map("user_id")
-  read      Boolean  @default(false)
-  reatedAt  DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
 
-  user Users @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@index([userId], name: "idx_notifications_user_id")
-}
