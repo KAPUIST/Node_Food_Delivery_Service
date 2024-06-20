@@ -11,7 +11,7 @@ export const updateStoreValidator = async (req, res, next) => {
             city: Joi.string().messages({
                 'string.base': MESSAGES.OWNER.COMMON.CITY.BASE,
             }),
-            address: Joi.string().required().messages({
+            address: Joi.string().messages({
                 'string.base': MESSAGES.OWNER.COMMON.ADDRESS.BASE,
             }),
             cuisineType: Joi.string()
