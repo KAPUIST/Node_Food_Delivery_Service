@@ -13,13 +13,9 @@ export const getReviewValidator = async (req, res, next) => {
             }),
         });
         const getReviewSchema = Joi.object({
-            orderBy: Joi.valid(...Object.values(REVIEWS_CONS.ORDER_BY))
-                .required()
-                .messages({
-                    'number.empty': MESSAGES.REVIEW.COMMON.ORDER_BY.REQUIRED,
-                    'any.required': MESSAGES.REVIEW.COMMON.ORDER_BY.REQUIRED,
-                    'any.only': MESSAGES.REVIEW.COMMON.ORDER_BY.INVALID_RATING,
-                }),
+            orderBy: Joi.valid(...Object.values(REVIEWS_CONS.ORDER_BY)).messages({
+                'any.only': MESSAGES.REVIEW.COMMON.ORDER_BY.INVALID_RATING,
+            }),
         });
         await restaurantIdSchema.validateAsync(req.params);
         await getReviewSchema.validateAsync(req.query);
