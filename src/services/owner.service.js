@@ -28,8 +28,6 @@ export class OwnerService {
             const error = { status: 401, errorMessage: '업장 정보를 작성해주세요!' };
             return error;
         }
-        //기본적으로 받는 금액 1000000원
-        storeData.totalRevenue = 1000000;
 
         const createdStore = await this.RestaurantRepository.makeStore(storeData);
         return createdStore;
@@ -45,11 +43,12 @@ export class OwnerService {
             return error;
         }
 
-        //정보 삭제
+        //출력되는 정보 삭제
 
         delete store.id;
         delete store.ownerId;
         delete store.flag;
+        delete store.totalRevenue;
 
         return store;
     };
