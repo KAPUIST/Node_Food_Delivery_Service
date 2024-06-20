@@ -26,10 +26,10 @@ const ownerController = new OwnerController(ownerService);
 router.post('/store', validateAccessToken(userRepository), generateStoreValidator, ownerController.generateStore);
 
 //사장 업장 조회
-router.get('/store', validateAccessToken(userRepository), updateStoreValidator, ownerController.checkStore);
+router.get('/store', validateAccessToken(userRepository), ownerController.checkStore);
 
 //사장 업장 수정
-router.patch('/store', validateAccessToken(userRepository), ownerController.updateStore);
+router.patch('/store', validateAccessToken(userRepository), updateStoreValidator, ownerController.updateStore);
 
 //사장 업장 삭제
 router.delete('/store', validateAccessToken(userRepository), ownerController.deleteStore);

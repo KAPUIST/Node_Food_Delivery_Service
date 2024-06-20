@@ -11,7 +11,7 @@ export const deleteReviewValidator = async (req, res, next) => {
                 'any.required': MESSAGES.REVIEW.COMMON.REVIEW_ID.REQUIRED,
             }),
         });
-        await deleteReviewSchema.validateAsync(req.body);
+        await deleteReviewSchema.validateAsync(req.params);
         next();
     } catch (err) {
         next(err);

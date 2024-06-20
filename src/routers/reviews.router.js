@@ -27,7 +27,7 @@ router.post(
     '/:orderId/order',
     validateAccessToken(usersRepository),
     requireRoles([AUTH_CONS.ROLE.CUSTOMER]),
-    createReviewValidator,
+    // createReviewValidator,
     upload.single('images'),
     (req, res, next) => {
         reviewsController.createReview(req, res, next);
