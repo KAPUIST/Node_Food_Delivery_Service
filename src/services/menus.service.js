@@ -43,8 +43,9 @@ export class MenusService {
         if (!restaurant) {
             throw new HttpError.NotFound(MESSAGES.RESTAURANTS.NOT_ALLOW);
         }
-        const existedMenu = await this.menusRepository.getMenu({ menuId, restaurantId: restaurant.id });
 
+        const existedMenu = await this.menusRepository.getMenu({ menuId, restaurantId: restaurant.id });
+        console.log(existedMenu);
         if (!existedMenu) {
             throw new HttpError.NotFound(MESSAGES.MENU.COMMON.NOT_FOUND);
         }

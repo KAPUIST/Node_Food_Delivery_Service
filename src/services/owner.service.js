@@ -42,7 +42,6 @@ export class OwnerService {
         delete store.id;
         delete store.ownerId;
         delete store.flag;
-        delete store.totalRevenue;
 
         return store;
     };
@@ -66,7 +65,7 @@ export class OwnerService {
         delete store.id;
         delete store.ownerId;
         delete store.flag;
-
+        delete store.totalRevenue;
         return store;
     };
 
