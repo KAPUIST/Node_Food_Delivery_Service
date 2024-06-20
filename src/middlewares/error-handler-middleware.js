@@ -1,7 +1,6 @@
-import Joi from 'joi';
 import { HTTP_STATUS } from '../constants/http-status.constant.js';
 import { MESSAGES } from '../constants/message.constant.js';
-
+// eslint-disable-next-line no-unused-vars
 export const errorHandler = (err, req, res, next) => {
     // 조이 에러 처리
     if (err.name === MESSAGES.AUTH.ERROR.JOI_ERR_NAME) {
