@@ -211,6 +211,7 @@ export const MESSAGES = {
             CREATE_STORE: {
                 SUCCESS: '성공적으로 식당이 생성 되었습니다!',
                 EXISTED: `이미 업장을 소유하고 있습니다! 업장 폐쇄 후 다시 등록해주시기 바랍니다.`,
+                UN_WRITE: '업장 정보를 작성해주세요!',
             },
             DELETE_STORE: {
                 SUCCESS: '성공적으로 식당이 삭제 되었습니다!',
