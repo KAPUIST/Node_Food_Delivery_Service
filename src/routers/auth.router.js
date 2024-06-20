@@ -28,7 +28,5 @@ router.post('/sign-in', signInValidator, authController.signInUser);
 router.post('/sign-out', validateRefreshToken(usersRepository, refreshTokenRepository), authController.signOutUser);
 // 토큰 재발급 API
 router.post('/refresh', validateRefreshToken(usersRepository, refreshTokenRepository), authController.reNewToken);
-// 인증 미들웨어 테스트 API
-router.get('/test', validateAccessToken(usersRepository), requireRoles(['CUSTOMER']), authController.test);
 
 export default router;

@@ -1,7 +1,7 @@
 import { HTTP_STATUS } from '../constants/http-status.constant.js';
 import { MESSAGES } from '../constants/message.constant.js';
 import { HttpError } from '../errors/http.error.js';
-import { COMPLETE_ORDER_STATUS, ORDER_STATUS, COMMON_ORDER_STATUS } from '../constants/orders.constant.js';
+import { COMPLETE_ORDER_STATUS, ORDER_STATUS, COMMON_ORDER_STATUS, COMMON } from '../constants/orders.constant.js';
 export default class OrderController {
     constructor(orderService) {
         this.orderService = orderService;
@@ -9,6 +9,7 @@ export default class OrderController {
 
     createOrder = async (req, res, next) => {
         try {
+            console.log(COMMON_ORDER_STATUS);
             const { orderItems, restaurantId } = req.body;
             //임시 사용 유저
             const userId = req.user.id;
@@ -28,7 +29,9 @@ export default class OrderController {
             const userId = req.user.id;
             const order = await this.orderService.getOrderById(+orderId);
             if (!order) {
-                throw new HttpError.NotFound(` 주문 번호 : ${orderId}, ${MESSAGES.ORDER.COMMON.ORDER_NOT_FOUND}`);
+                throw new HttpError.NotFound(
+                    ` ${COMMON.ORDER_ID} : ${orderId}, ${MESSAGES.ORDER.COMMON.ORDER_NOT_FOUND}`,
+                );
             }
 
             const isOwner = await this.orderService.verifyRestaurantOwner(userId, order.restaurantId);
@@ -75,10 +78,14 @@ export default class OrderController {
             }
             const order = await this.orderService.getOrderById(+orderId);
             if (!order) {
-                throw new HttpError.NotFound(`주문 번호 : ${orderId}, ${MESSAGES.ORDER.COMMON.ORDER_NOT_FOUND}`);
+                throw new HttpError.NotFound(
+                    `${COMMON.ORDER_ID} : ${orderId}, ${MESSAGES.ORDER.COMMON.ORDER_NOT_FOUND}`,
+                );
             }
             if (order.status === COMPLETE_ORDER_STATUS.DELIVERED) {
-                throw new HttpError.BadRequest(`주문 번호 : ${orderId}, ${MESSAGES.ORDER.COMMON.ALREADY_COMPLETED}`);
+                throw new HttpError.BadRequest(
+                    `${COMMON.ORDER_ID} : ${orderId}, ${MESSAGES.ORDER.COMMON.ALREADY_COMPLETED}`,
+                );
             }
             const isOwner = await this.orderService.verifyRestaurantOwner(userId, order.restaurantId);
             if (!isOwner) {
@@ -100,10 +107,14 @@ export default class OrderController {
 
             const order = await this.orderService.getOrderById(+orderId);
             if (!order) {
-                throw new HttpError.NotFound(`주문 번호 : ${orderId}, ${MESSAGES.ORDER.COMMON.ORDER_NOT_FOUND}`);
+                throw new HttpError.NotFound(
+                    `${COMMON.ORDER_ID} : ${orderId}, ${MESSAGES.ORDER.COMMON.ORDER_NOT_FOUND}`,
+                );
             }
             if (order.status === COMPLETE_ORDER_STATUS.DELIVERED) {
-                throw new HttpError.BadRequest(`주문 번호 : ${orderId}, ${MESSAGES.ORDER.COMMON.ALREADY_COMPLETED}`);
+                throw new HttpError.BadRequest(
+                    `${COMMON.ORDER_ID} : ${orderId}, ${MESSAGES.ORDER.COMMON.ALREADY_COMPLETED}`,
+                );
             }
             const isOwner = await this.orderService.verifyRestaurantOwner(userId, order.restaurantId);
             if (!isOwner) {

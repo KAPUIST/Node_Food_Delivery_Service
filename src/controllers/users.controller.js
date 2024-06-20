@@ -1,3 +1,4 @@
+import { MESSAGES } from '../constants/message.constant.js';
 export class UsersController {
     constructor(UsersService) {
         this.UsersService = UsersService;
@@ -18,7 +19,6 @@ export class UsersController {
         } catch (err) {
             next(err);
         }
-        // return res.status(200).json({Message:"코드 검증 완료"});
     };
 
     //내 계정 정보 수정
@@ -33,7 +33,7 @@ export class UsersController {
                 return res.status(changedUser.status).json({ errorMessage: changedUser.errorMessage });
             }
 
-            return res.status(200).json({ Message: '성공적으로 정보가 수정되었습니다!' });
+            return res.status(200).json({ Message: MESSAGES.USER.COMMON.EDIT_USER.SUCCESS });
         } catch (err) {
             next(err);
         }

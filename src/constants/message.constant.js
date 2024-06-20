@@ -62,6 +62,7 @@ export const MESSAGES = {
                 EXPIRED: '인증 정보가 만료되었습니다.',
                 NO_USER: '인증 정보와 일치하는 사용자가 없습니다.',
                 INVALID: '인증 정보가 유효하지 않습니다.',
+                DISCARDED_TOKEN: '폐기된 인증 정보입니다.',
             },
         },
         SIGN_UP: {
@@ -178,6 +179,9 @@ export const MESSAGES = {
                 BASE: '포인트는 정수형입니다.',
                 REQUIRED: '포인트를 입력해 주세요.',
             },
+            EDIT_USER: {
+                SUCCESS: '성공적으로 정보가 수정되었습니다!',
+            },
         },
     },
     OWNER: {
@@ -203,6 +207,13 @@ export const MESSAGES = {
             NUMBER: {
                 BASE: '복구할 업장 번호는 정수형입니다.',
                 REQUIRED: '복구할 업장 번호를 입력해 주세요.',
+            },
+            CREATE_STORE: {
+                SUCCESS: '성공적으로 식당이 생성 되었습니다!',
+                EXISTED: `이미 업장을 소유하고 있습니다! 업장 폐쇄 후 다시 등록해주시기 바랍니다.`,
+            },
+            DELETE_STORE: {
+                SUCCESS: '성공적으로 식당이 삭제 되었습니다!',
             },
         },
     },

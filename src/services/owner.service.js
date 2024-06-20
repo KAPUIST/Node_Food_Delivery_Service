@@ -1,3 +1,6 @@
+import { MESSAGES } from '../constants/message.constant.js';
+import { HttpError } from '../errors/http.error.js';
+
 export class OwnerService {
     constructor(UserRepository, RestaurantRepository) {
         this.UserRepository = UserRepository;
@@ -15,18 +18,12 @@ export class OwnerService {
 
         //이미 업장을 소유하고 있는 경우
         if (await this.RestaurantRepository.findStore(condition)) {
-            const error = {
-                status: 401,
-                errorMessage: `이미 업장을 소유하고 있습니다!
-                업장 폐쇄 후 다시 등록해주시기 바랍니다.`,
-            };
-            return error;
+            throw new HttpError.Unauthorized(MESSAGES.OWNER.COMMON.CREATE_STORE.EXISTED);
         }
 
         //업장 정보를 입력하지 않은 경우
         if (!storeData.name) {
-            const error = { status: 401, errorMessage: '업장 정보를 작성해주세요!' };
-            return error;
+            throw new HttpError.Unauthorized(MESSAGES.OWNER.COMMON.CREATE_STORE.UN_WRITE);
         }
         //기본적으로 받는 금액 1000000원
         storeData.totalRevenue = 1000000;

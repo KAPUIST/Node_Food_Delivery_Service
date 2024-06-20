@@ -67,13 +67,4 @@ export class AuthController {
             next(err);
         }
     };
-    // test
-    test = async (req, res, next) => {
-        try {
-            const user = req.user;
-            return res.status(HTTP_STATUS.OK).json({ status: HTTP_STATUS.OK, message: 'test', data: user });
-        } catch (err) {
-            next(err);
-        }
-    };
 }

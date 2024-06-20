@@ -1,4 +1,5 @@
 import { HTTP_STATUS } from '../constants/http-status.constant.js';
+import { REVIEWS_CONS } from '../constants/reviews.constant.js';
 export default class ReviewsController {
     constructor(reviewService) {
         this.reviewService = reviewService;
@@ -8,8 +9,13 @@ export default class ReviewsController {
         try {
             const { restaurantId } = req.params;
             let { orderBy } = req.query;
-            if (orderBy && !Object.values({ desc: 'desc', asc: 'asc' }).includes(orderBy.toLowerCase())) {
-                orderBy = 'desc';
+            if (
+                orderBy &&
+                !Object.values({ desc: REVIEWS_CONS.ORDER_BY.DESC, asc: REVIEWS_CONS.ORDER_BY.ASC }).includes(
+                    orderBy.toLowerCase(),
+                )
+            ) {
+                orderBy = REVIEWS_CONS.ORDER_BY.DESC;
             }
             const reviews = await this.reviewService.findReviewByRestaurantId(+restaurantId, orderBy);
             res.status(HTTP_STATUS.OK).json({

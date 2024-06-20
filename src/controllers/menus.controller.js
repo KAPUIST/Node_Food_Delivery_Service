@@ -1,6 +1,6 @@
-import { MenusService } from '../services/menus.service.js';
 import { HTTP_STATUS } from '../constants/http-status.constant.js';
 import { MESSAGES } from '../constants/message.constant.js';
+import { MENUS_CONS } from '../constants/menus.constant.js';
 
 export class MenusController {
     constructor(menusService) {
@@ -25,8 +25,8 @@ export class MenusController {
             let { sort } = req.query;
             sort = sort?.toLowerCase();
 
-            if (sort !== 'desc' && sort !== 'asc') {
-                sort = 'desc';
+            if (sort !== MENUS_CONS.ORDER_BY.DESC && sort !== MENUS_CONS.ORDER_BY.ASC) {
+                sort = MENUS_CONS.ORDER_BY.DESC;
             }
             console.log(sort);
 
