@@ -6,8 +6,6 @@ import { UsersRepository } from '../repositories/users.repository.js';
 import { PointsRepository } from '../repositories/points.repository.js';
 import { RefreshTokenRepository } from '../repositories/refresh-token.repository.js';
 import { validateRefreshToken } from '../middlewares/require-refresh-token.middleware.js';
-import { requireRoles } from '../middlewares/require-roles.middleware.js';
-import { validateAccessToken } from '../middlewares/require-access-token.middleware.js';
 import { signUpValidator } from '../middlewares/validators/auth/sign-up.validator.middleware.js';
 import { signInValidator } from '../middlewares/validators/auth/sign-in.validator.middleware.js';
 
@@ -28,7 +26,5 @@ router.post('/sign-in', signInValidator, authController.signInUser);
 router.post('/sign-out', validateRefreshToken(usersRepository, refreshTokenRepository), authController.signOutUser);
 // 토큰 재발급 API
 router.post('/refresh', validateRefreshToken(usersRepository, refreshTokenRepository), authController.reNewToken);
-// 인증 미들웨어 테스트 API
-router.get('/test', validateAccessToken(usersRepository), requireRoles(['CUSTOMER']), authController.test);
 
 export default router;

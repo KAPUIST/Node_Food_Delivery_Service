@@ -1,4 +1,6 @@
 import bcrypt from 'bcrypt';
+import { HttpError } from '../errors/http.error.js';
+import { MESSAGES } from '../constants/message.constant.js';
 
 export class UsersService {
     constructor(UsersRepository, PointsRepository) {
@@ -19,8 +21,7 @@ export class UsersService {
 
         //errorCase
         if (!user) {
-            const error = { status: 400, errorMessage: '존재하지 않는 계정입니다.' };
-            return error;
+            throw new HttpError.BadRequest(MESSAGES.USER.COMMON.GET_USER.NOT_EXISTED);
         }
         //정보 삭제
         delete user.password;
@@ -36,21 +37,17 @@ export class UsersService {
         const user = await this.findUser(condition);
 
         if (!changeData) {
-            const error = { status: 403, errorMessage: '변경할 정보가 없습니다!' };
-            return error;
+            throw new HttpError.BadRequest(MESSAGES.USER.COMMON.EDIT_USER.NOT_DATA);
         }
-
         const password = changeData.password;
 
         //비밀번호 검증
         if (!password) {
-            const error = { status: 403, errorMessage: '비밀번호를 입력해주세요!' };
-            return error;
+            throw new HttpError.Forbidden(MESSAGES.USER.COMMON.EDIT_USER.PASSWORD);
         }
 
         if (!(await this.verifyPassword(password, user.password))) {
-            const error = { status: 403, errorMessage: '비밀번호가 일치하지 않습니다.' };
-            return error;
+            throw new HttpError.Forbidden(MESSAGES.USER.COMMON.EDIT_USER.NOT_MATCHED_PASSWORD);
         }
 
         delete changeData.password;
@@ -65,19 +62,15 @@ export class UsersService {
     deleteUser = async (condition, password) => {
         //사용자 입력 확인
         if (!password) {
-            const error = { status: 403, errorMessage: '비밀번호를 입력해주세요!' };
-            return error;
+            throw new HttpError.Forbidden(MESSAGES.USER.COMMON.DELETE_USER.PASSWORD);
         }
         const user = await this.findUser(condition);
         if (!user) {
-            const error = { status: 404, errorMessage: '존재하지 않는 계정입니다!' };
-            return error;
+            throw new HttpError.NotFound(MESSAGES.USER.COMMON.DELETE_USER.NOT_EXISTED);
         }
         if (!(await this.verifyPassword(password, user.password))) {
-            const error = { status: 403, errorMessage: '비밀번호가 일치하지 않습니다.' };
-            return error;
+            throw new HttpError.Forbidden(MESSAGES.USER.COMMON.DELETE_USER.NOT_MATCHED_PASSWORD);
         }
-
         //모든 검증이 끝난뒤 데이터 삭제
         const deletedUser = await this.UsersRepository.deleteUser(condition);
         return deletedUser;
@@ -85,10 +78,8 @@ export class UsersService {
     //금액 충전
     chargePoint = async (condition, chargeMoney) => {
         const chargedMoney = await this.PointsRepository.increasePoint(condition, chargeMoney);
-
         delete chargedMoney.id;
         delete chargedMoney.userId;
-
         return chargedMoney;
     };
 }

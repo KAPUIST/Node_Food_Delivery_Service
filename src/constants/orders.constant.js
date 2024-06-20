@@ -18,3 +18,6 @@ export const COMPLETE_ORDER_STATUS = {
 export const ORDER_VALIDATOR = {
     ARRAY_MIN_LENGTH: 1, // 유효성 검사 시 orderItems 배열 최소 길이
 };
+export const COMMON = {
+    ORDER_ID: '주문 번호',
+};
