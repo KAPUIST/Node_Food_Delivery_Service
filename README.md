@@ -37,19 +37,30 @@
 
 ## 3. 역할 분배
 
--   ## **손태권**
--   ## **오승민**
--   ## **채유일**
--   ## **이윤형**
+-   **손태권**
+    -   음식 주문, 주문 전체 및 개별 확인, 주문 수락, 주문 완료 API 구현
+    -   리뷰 생성, 리뷰 조회, 리뷰 수정, 리뷰 삭제 API 구현
+    -   음식점 검색 API 구현
+    -   REDIS적용, 알림 구현
+-   **오승민**
+    -   메뉴 생성, 메뉴 조회, 메뉴 수정, 메뉴 삭제 API 구현
+-   **이윤형**
+    -   업장 생성, 업장 조회, 업장 수정, 업장 삭제, 업장 복구 API
+    -   유저 정보 조회, 유저 정보 수정, 유저 정보 삭제, 포인트 충전 API 구현
+    -   와이어 프레임 작성
+-   **채유일**
+    -   회원가입, 로그인, 로그아웃, 메일 인증, 토큰 재발급 API 구현
+    -   accessToken 미들웨어, refreshToken 미들웨어, 에러 관련 로직 구현
+    -   Joi 유효성 검사, readme 작성
 
 <br>
 
 ## 4. API 명세서 및 ERD, 와이어 프레임
 
 -   API 명세서 : https://www.notion.so/teamsparta/013686667ac6424190f394610347af6c?v=9fdbff9cbb3b4797aefab6216531125d
--   ERD :
+-   ERD : https://drawsql.app/teams/-1278/diagrams/node-delivery
 
-![와이어프레임]()
+![와이어프레임](./imgs/team_wireframe.jpg)
 
 <br>
 
@@ -63,6 +74,8 @@
 
 -   REDIS를 이용해 비교할 인증코드를 저장합니다.
 
+-   생성된 인증 코드를 Redis에 저장 후 반환합니다.
+
 ![이메일 인증 API](./imgs/1.%20이메일%20인증.png)
 
 <br>https://github.com/KAPUIST/Node_Food_Delivery_Service/blob/298a4e25843cfb56087578af7bab032ffe09cb9f/src/services/auth.service.js#L56
@@ -73,7 +86,7 @@
 
 -   **보안을 위해 비밀번호는** **bcrypt**를 사용해 `Hash` 된 값을 저장합니다.
 
--
+-   생성된 회원 정보를 DB 저장 후 반환합니다.
 
 ![회원가입 API](./imgs/2.%20회원가입.png)
 
@@ -87,7 +100,7 @@
 
 -   **RefreshToken**(`사용자 ID`를 포함, **만료기한** `7일`)을 생성합니다.
 
--   **AccessToken**와**RefreshToken**을 반환합니다.
+-   AccessToken과 RefreshToken을 DB 저장 후 반환합니다.
 
 ![로그인 API](./imgs/3.%20로그인.png)
 
@@ -101,6 +114,8 @@
 
 -   토큰 유효성 검사가 통과하면 새로운 Refresh 토큰을 재발급 받습니다.
 
+-   AccessToken과 RefreshToken을 DB 저장 후 반환합니다.
+
 ![토큰 재발급 API](./imgs/4.%20토큰%20재발급.png)
 
 <br>https://github.com/KAPUIST/Node_Food_Delivery_Service/blob/298a4e25843cfb56087578af7bab032ffe09cb9f/src/services/auth.service.js#L113
@@ -113,6 +128,8 @@
 
 -   검증을 통과하면 DB에 있는 기존 Refresh Token을 `null`값으로 변경하여 폐기합니다.
 
+-   삭제된 사용자의 ID 값을 반환합니다.
+
 ![로그 아웃 API](./imgs/5.%20로그아웃.png)
 
 <br>https://github.com/KAPUIST/Node_Food_Delivery_Service/blob/298a4e25843cfb56087578af7bab032ffe09cb9f/src/services/auth.service.js#L108
@@ -124,6 +141,8 @@
 -   `accessToken`미들웨어 를 통해 로그인한 사용자의 `Access Token`를 검증합니다.
 
 -   검증을 통과하면 `req.user`를 통해 사용자의 정보를 가져옵니다.
+
+-   조회된 사용자의 정보를 반환합니다.
 
 ![사용자 조회 API](./imgs/6.%20유저%20프로필%20조회.png)
 
@@ -139,6 +158,8 @@
 
 -   비밀번호, 지역, 주소, 전화 번호를 `req.body`를 통해 받아옵니다.
 
+-   수정 성공시 메시지를 반환합니다.
+
 ![사용자 정보 수정 API](./imgs/7.%20사용자%20정보%20수정.png)
 
 <br> https://github.com/KAPUIST/Node_Food_Delivery_Service/blob/298a4e25843cfb56087578af7bab032ffe09cb9f/src/services/users.service.js#L36
@@ -152,6 +173,8 @@
 -   검증을 통과하면 `req.user`를 통해 사용자의 정보를 가져옵니다.
 
 -   비밀번호를 `req.body`를 통해 받아옵니다.
+
+-   삭제 성공시 메시지를 반환합니다.
 
 ![사용자 계정 삭제 API](./imgs/8.%20사용자%20정보%20삭제.png)
 
@@ -167,7 +190,9 @@
 
 -   충전할 포인트를 `req.body`를 통해 받아옵니다.
 
-![사용자 포인트 충전 API]()
+-   충전후 변경된 포인트를 반환합니다.
+
+![사용자 포인트 충전 API](./imgs/9.%20사용자%20포인트%20충전.png)
 
 <br>
 
@@ -181,7 +206,8 @@
 
 -   가게이름, 지역, 주소, 음식타입을 `req.body`를 통해 받아옵니다.
 
-![사장 업장 생성 API](./imgs/10.%20업장%20생성.png)
+-   성공 시 메시지를 반환합니다.
+    ![사장 업장 생성 API](./imgs/10.%20업장%20생성.png)
 
 <br>https://github.com/KAPUIST/Node_Food_Delivery_Service/blob/13cc229555249a7ba6a83b18d447db1c95c3d4a8/src/services/owner.service.js#L15
 
@@ -192,6 +218,8 @@
 -   `accessToken`미들웨어 를 통해 로그인한 사용자의 `Access Token`를 검증합니다.
 
 -   검증을 통과하면 `req.user`를 통해 사용자의 정보를 가져옵니다.
+
+-   조회된 업장의 정보를 반환합니다.
 
 ![5-11. 사장 업장 조회 API](./imgs/11.%20사장%20업장%20조회.png)
 
@@ -207,6 +235,8 @@
 
 -   가게이름, 지역, 주소, 음식타입을 `req.body`를 통해 받아옵니다.
 
+-   수정된 업장의 정보를 반환합니다.
+
 ![5-12. 사장 업장 수정 API](./imgs/12.%20사장%20업장%20수정.png)
 
 <br>https://github.com/KAPUIST/Node_Food_Delivery_Service/blob/9483135da967a327b9be8de1e1e0adda280feaf0/src/services/owner.service.js#L50
@@ -218,6 +248,8 @@
 -   `accessToken`미들웨어 를 통해 로그인한 사용자의 `Access Token`를 검증합니다.
 
 -   검증을 통과하면 `req.user`를 통해 사용자의 정보를 가져옵니다.
+
+-   삭제 성공시 메시지를 반환합니다.
 
 ![사장 업장 삭제 API](./imgs/13.%20사장%20업장%20삭제.png)
 
@@ -233,6 +265,8 @@
 
 -   폐업된 가게의 번호를 `req.body`를 통해 받아옵니다.
 
+-   복구된 업장의 정보를 반환합니다.
+
 ![사장 업장 복구 API](./imgs/14.%20사장%20업장%20복구.png)
 
 <br>https://github.com/KAPUIST/Node_Food_Delivery_Service/blob/9483135da967a327b9be8de1e1e0adda280feaf0/src/services/owner.service.js#L91
@@ -247,6 +281,8 @@
 
 -   메뉴이름과 가격을 `req.body`를 통해 받아옵니다.
 
+-   생성된 메뉴의 정보를 반환합니다.
+
 ![가게 메뉴 생성 API](./imgs/15.%20메뉴%20생성.png)
 
 <br>https://github.com/KAPUIST/Node_Food_Delivery_Service/blob/9483135da967a327b9be8de1e1e0adda280feaf0/src/services/menus.service.js#L10
@@ -258,6 +294,8 @@
 -   가게 ID 정보를 `req.params`를 통해 가져옵니다.
 
 -   정렬 방식을 `req.query`를 통해 가져옵니다.
+
+-   조회된 메뉴의 정보를 반환합니다.
 
 ![가게 메뉴 조회 API](./imgs/11.%20사장%20업장%20조회.png)
 
@@ -275,6 +313,8 @@
 
 -   메뉴이름과 가격을 `req.body`를 통해 받아옵니다.
 
+-   조회된 메뉴의 정보를 반환합니다.
+
 ![가게 메뉴 수정 API](./imgs/17.%20메뉴%20수정.png)
 
 <br>https://github.com/KAPUIST/Node_Food_Delivery_Service/blob/9483135da967a327b9be8de1e1e0adda280feaf0/src/services/menus.service.js#L41
@@ -289,6 +329,8 @@
 
 -   메뉴 ID 정보를 `req.params`를 통해 가져옵니다.
 
+-   삭제된 메뉴의 정보를 반환합니다.
+
 ![가게 메뉴 삭제 API](./imgs/18.%20메뉴%20삭제.png)
 
 <br>https://github.com/KAPUIST/Node_Food_Delivery_Service/blob/9483135da967a327b9be8de1e1e0adda280feaf0/src/services/menus.service.js#L60
@@ -301,7 +343,9 @@
 
 -   검증을 통과하면 `req.user`를 통해 사용자의 정보를 가져옵니다.
 
--   주문할 가게의 ID와 메뉴 ID, 수량을 `req.body`를 통해 가져옵니다.
+-   검색조건을 `req.query`를 통해 가져옵니다.
+
+-   조건에 따라 조회된 식당 목록을 반환합니다.
 
 ![유저 음식점 검색 API](./imgs/19.%20유저%20음식점%20검색.png)
 
@@ -317,6 +361,8 @@
 
 -   주문 생성 시 사장님께 알람이 전송됩니다.
 
+-   주문 정보를 반환합니다.
+
 ![유저 음식점 주문 API](./imgs/20.%20유저%20음식%20주문.png)
 
 <br>https://github.com/KAPUIST/Node_Food_Delivery_Service/blob/9483135da967a327b9be8de1e1e0adda280feaf0/src/services/orders.service.js#L92
@@ -331,6 +377,8 @@
 
 -   주문 상태와 가게 ID를 `req.query`를 통해 받아옵니다.
 
+-   가게의 전체 주문 목록을 상태 조건에 따라 반환합니다.
+
 ![가게 음식점 주문 확인 API](./imgs/21.%20가게%20전체%20주문%20.png)
 
 <br>https://github.com/KAPUIST/Node_Food_Delivery_Service/blob/9483135da967a327b9be8de1e1e0adda280feaf0/src/controllers/orders.controller.js#L48
@@ -344,6 +392,8 @@
 -   토큰 유효성 검사가 통과하면 `req.user`를 통해 사용자의 정보를 가져옵니다.
 
 -   주문 ID를 `req.params`를 통해 받아옵니다.
+
+-   주문 정보를 반환합니다.
 
 ![가게 음식점 개별 주문 확인 API](./imgs/22.%20가게%20개별%20주문%20확인.png)
 
@@ -361,6 +411,8 @@
 
 -   변경할 상태를 `req.body`를 통해 받아옵니다.
 
+-   변경된 상태와, 고객ID, 가게 ID를 반환합니다.
+
 ![가게 음식점 주문 수락 API](./imgs/23.%20가게%20주문%20수락.png)
 
 <br>https://github.com/KAPUIST/Node_Food_Delivery_Service/blob/9483135da967a327b9be8de1e1e0adda280feaf0/src/controllers/orders.controller.js#L70
@@ -374,6 +426,8 @@
 -   토큰 유효성 검사가 통과하면 `req.user`를 통해 사용자의 정보를 가져옵니다.
 
 -   주문 ID를 `req.params`를 통해 받아옵니다.
+
+-   변경된 상태와, 고객ID, 가게 ID를 반환합니다.
 
 ![가게 음식점 배달 완료 API](./imgs/24.%20가게%20배달%20완료.png)
 
@@ -393,6 +447,8 @@
 
 -   평점과 코멘트를 `req.body`를 통해 받아옵니다.
 
+-   생성한 리뷰 정보를 반환합니다.
+
 ![유저 리뷰 작성 API](./imgs/25.%20유저%20리뷰%20작성.png)
 
 <br>https://github.com/KAPUIST/Node_Food_Delivery_Service/blob/9483135da967a327b9be8de1e1e0adda280feaf0/src/controllers/reviewsController.js#L28
@@ -404,6 +460,8 @@
 -   가게 ID를 `req.params`를 통해 받아옵니다.
 
 -   정렬 순서를 `req.query`를 통해 받아옵니다.
+
+-   조회한 리뷰 정보를 반환합니다.
 
 ![유저 리뷰 조회 API](./imgs/26.%20유저%20리뷰%20조회.png)
 
@@ -421,6 +479,8 @@
 
 -   수정할 평점과 코멘트를 `req.body`를 통해 받아옵니다.
 
+-   수정한 리뷰 정보를 반환합니다.
+
 ![유저 리뷰 수정 API](./imgs/27.%20유저%20리뷰%20수정.png)
 
 <br>https://github.com/KAPUIST/Node_Food_Delivery_Service/blob/9483135da967a327b9be8de1e1e0adda280feaf0/src/controllers/reviewsController.js#L42
@@ -435,6 +495,8 @@
 
 -   리뷰 ID를 `req.params`를 통해 받아옵니다.
 
+-   삭제한 리뷰의 ID를 반환합니다.
+
 ![유저 리뷰 삭제 API](./imgs/28.%20유저%20리뷰%20삭제.png)
 
 <br>https://github.com/KAPUIST/Node_Food_Delivery_Service/blob/9483135da967a327b9be8de1e1e0adda280feaf0/src/controllers/reviewsController.js#L55
@@ -442,6 +504,8 @@
 ## 5-29. 랭크순 가게 조회 API
 
 -   매출액 기준 랭크순 가게 조회 API 입니다.
+
+-   랭크순으로 정렬된 가게 목록을 반환합니다.
 
 ![랭크순 가게 조회 API](./imgs/29.%20랭크순%20가게%20조회.png)
 
