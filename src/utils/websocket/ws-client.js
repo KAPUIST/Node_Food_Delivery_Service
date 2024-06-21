@@ -5,7 +5,7 @@ const ownerClient = new WebSocket('ws://localhost:3000');
 
 ownerClient.on('open', () => {
     console.log('Connected to WebSocket server as Owner');
-    ownerClient.send(JSON.stringify({ type: 'New Order', userId: 2, role: 'owner' }));
+    ownerClient.send(JSON.stringify({ type: 'New Order', userId: 8, role: 'owner' }));
 });
 
 ownerClient.on('message', (message) => {
@@ -28,7 +28,7 @@ const customerClient = new WebSocket('ws://localhost:3000');
 
 customerClient.on('open', () => {
     console.log('Connected to WebSocket server as Customer');
-    customerClient.send(JSON.stringify({ type: 'Change Order Status', userId: 1, role: 'customer' }));
+    customerClient.send(JSON.stringify({ type: 'Change Order Status', userId: 3, role: 'customer' }));
 });
 
 customerClient.on('message', (message) => {
