@@ -1,5 +1,7 @@
 # Team 2 그건 아니조 Node.js 배달 서비스 프로젝트
 
+![썸네일](./imgs/111.001.jpeg)
+
 ## 프로젝트 소개
 
 -   프로젝트 이름 : 밥 좀 주유소
@@ -39,9 +41,9 @@
 
 -   **손태권**
     -   음식 주문, 주문 전체 및 개별 확인, 주문 수락, 주문 완료 API 구현
-    -   리뷰 생성, 리뷰 조회, 리뷰 수정, 리뷰 삭제 API 구현
-    -   음식점 검색 API 구현
+    -   리뷰 생성, 리뷰 조회, 리뷰 수정, 리뷰 삭제 API 구현, 음식점 검색 API 구현
     -   REDIS적용, 알림 구현
+    -   스키마 작성, 관리
 -   **오승민**
     -   메뉴 생성, 메뉴 조회, 메뉴 수정, 메뉴 삭제 API 구현
 -   **이윤형**
@@ -104,7 +106,7 @@
 
 ![로그인 API](./imgs/3.%20로그인.png)
 
-<br>https://github.com/KAPUIST/Node_Food_Delivery_Service/blob/298a4e25843cfb56087578af7bab032ffe09cb9f/src/services/auth.service.js#L91
+<br>https://github.com/KAPUIST/Node_Food_Delivery_Service/blob/27c3e819a44f3c994fe93ed2173f72792f3a9b47/src/services/auth.service.js#L92
 
 ### 5-4. 토큰 재발급 API
 
@@ -118,7 +120,7 @@
 
 ![토큰 재발급 API](./imgs/4.%20토큰%20재발급.png)
 
-<br>https://github.com/KAPUIST/Node_Food_Delivery_Service/blob/298a4e25843cfb56087578af7bab032ffe09cb9f/src/services/auth.service.js#L113
+<br>https://github.com/KAPUIST/Node_Food_Delivery_Service/blob/27c3e819a44f3c994fe93ed2173f72792f3a9b47/src/services/auth.service.js#L114
 
 ### 5-5. 로그아웃 API
 
@@ -132,7 +134,7 @@
 
 ![로그 아웃 API](./imgs/5.%20로그아웃.png)
 
-<br>https://github.com/KAPUIST/Node_Food_Delivery_Service/blob/298a4e25843cfb56087578af7bab032ffe09cb9f/src/services/auth.service.js#L108
+<br>https://github.com/KAPUIST/Node_Food_Delivery_Service/blob/27c3e819a44f3c994fe93ed2173f72792f3a9b47/src/services/auth.service.js#L109
 
 ### 5-6. 사용자 프로필 조회 API
 
@@ -194,7 +196,7 @@
 
 ![사용자 포인트 충전 API](./imgs/9.%20사용자%20포인트%20충전.png)
 
-<br>
+<br>https://github.com/KAPUIST/Node_Food_Delivery_Service/blob/27c3e819a44f3c994fe93ed2173f72792f3a9b47/src/services/users.service.js#L79
 
 ### 5-10. 사장 업장 생성 API
 
@@ -209,7 +211,7 @@
 -   성공 시 메시지를 반환합니다.
     ![사장 업장 생성 API](./imgs/10.%20업장%20생성.png)
 
-<br>https://github.com/KAPUIST/Node_Food_Delivery_Service/blob/13cc229555249a7ba6a83b18d447db1c95c3d4a8/src/services/owner.service.js#L15
+<br>https://github.com/KAPUIST/Node_Food_Delivery_Service/blob/27c3e819a44f3c994fe93ed2173f72792f3a9b47/src/services/owner.service.js#L16
 
 ### 5-11. 사장 업장 조회 API
 
@@ -223,7 +225,7 @@
 
 ![5-11. 사장 업장 조회 API](./imgs/11.%20사장%20업장%20조회.png)
 
-<br>https://github.com/KAPUIST/Node_Food_Delivery_Service/blob/9483135da967a327b9be8de1e1e0adda280feaf0/src/services/owner.service.js#L33
+<br>https://github.com/KAPUIST/Node_Food_Delivery_Service/blob/27c3e819a44f3c994fe93ed2173f72792f3a9b47/src/services/owner.service.js#L34
 
 ### 5-12. 사장 업장 수정 API
 
@@ -239,7 +241,7 @@
 
 ![5-12. 사장 업장 수정 API](./imgs/12.%20사장%20업장%20수정.png)
 
-<br>https://github.com/KAPUIST/Node_Food_Delivery_Service/blob/9483135da967a327b9be8de1e1e0adda280feaf0/src/services/owner.service.js#L50
+<br>https://github.com/KAPUIST/Node_Food_Delivery_Service/blob/27c3e819a44f3c994fe93ed2173f72792f3a9b47/src/services/owner.service.js#L50
 
 ### 5-13. 사장 업장 삭제 API
 
@@ -253,7 +255,7 @@
 
 ![사장 업장 삭제 API](./imgs/13.%20사장%20업장%20삭제.png)
 
-<br>https://github.com/KAPUIST/Node_Food_Delivery_Service/blob/9483135da967a327b9be8de1e1e0adda280feaf0/src/services/owner.service.js#L73
+<br>https://github.com/KAPUIST/Node_Food_Delivery_Service/blob/27c3e819a44f3c994fe93ed2173f72792f3a9b47/src/services/owner.service.js#L73
 
 ### 5-14. 사장 업장 복구 API
 
@@ -269,7 +271,7 @@
 
 ![사장 업장 복구 API](./imgs/14.%20사장%20업장%20복구.png)
 
-<br>https://github.com/KAPUIST/Node_Food_Delivery_Service/blob/9483135da967a327b9be8de1e1e0adda280feaf0/src/services/owner.service.js#L91
+<br>https://github.com/KAPUIST/Node_Food_Delivery_Service/blob/27c3e819a44f3c994fe93ed2173f72792f3a9b47/src/services/owner.service.js#L91
 
 ### 5-15. 가게 메뉴 생성 API
 
